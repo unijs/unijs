@@ -65,10 +65,10 @@ var interns = {
 			return 'http://localhost/';
 		},
 		routesPath: './Route.js',
-		scripts: [],
-		stylesheets: [],
-		buildPath: './isojsBuild/',
-		uglify: false
+		uglify: false,
+		debug: false,
+		head: '<title>isoJS</title>',
+		maxRuns: 5
 	},
 	configRequierements: ['routesPath'],
 	buildState: 0,
@@ -107,16 +107,19 @@ var createServer = function(config) {
 	}
 	var appText = "var isojs = require('isojs'); isojs.checkLocation.setClient(); var React = require('react'); var Router = require('react-router'); var routes = require('" + directPath + "'); Router.run(routes, Router.HistoryLocation, function (Handler) { React.render(<Handler/>, document.getElementById('main')); });";
 
+	var appJSpath = __dirname + '/build/app.js';
+	var srcPath = __dirname + '/src';
+	var buildPath = __dirname + '/build';
 
-	fs.outputFile(__dirname + '/build/app.js', appText, function(err) {
+	fs.outputFile(appJSpath, appText, function(err) {
 		if (err) {
-			return isoJSlog.error('(createServer): Failed to create build dir: "' + interns.config.buildPath + 'app.js"!', err);
+			return isoJSlog.error('(createServer): Failed to create build dir: "' + appJSpath + '"!', err);
 		}
 
 		isoJSlog.log('2. Build browserify bundle...');
 
-		exec('node builder.js ' + __dirname + '/build', {
-			cwd: __dirname + '/src'
+		exec('node builder.js ' + buildPath, {
+			cwd: srcPath
 		}, function(error, stdout, stderr) {
 			if (error) {
 				isoJSlog.error('(createServer): Failed to build browserify bundle...')
@@ -127,8 +130,8 @@ var createServer = function(config) {
 			if (interns.config.uglify) {
 				isoJSlog.log('APP Ready! :) [bundle not minifyed]');
 				isoJSlog.log('3. Build minifyed bundle...');
-				exec('node minify.js ' + __dirname + '/build', {
-					cwd: __dirname + '/src'
+				exec('node minify.js ' + buildPath, {
+					cwd: srcPath
 				}, function(error, stdout, stderr) {
 					if (error) {
 						return isoJSlog.error('(createServer): Failed to build browserify bundle...');
@@ -188,12 +191,7 @@ var render = function() {
 		if (req.isojs.fetchedData == null) {
 			req.isojs.fetchedData = {};
 		}
-		req.isojs.timetrace = [];
-		req.isojs.timetrace.push({
-			time: Date.now(),
-			text: 'start'
-		});
-		//req.runs++;
+
 		var router = Router.create({
 			routes: interns.routes,
 			location: req.url,
@@ -203,7 +201,6 @@ var render = function() {
 			}
 		});
 		router.run(function(Handler, state) {
-			//console.log('STA >', state);
 			var unifyedRouteTemp = [];
 			for (var i in state.routes) {
 				unifyedRouteTemp.push(state.routes[i].name);
@@ -215,10 +212,7 @@ var render = function() {
 			req.isojs.Handler = Handler;
 			req.isojs.appFactory = React.createFactory(Handler);
 			req.isojs.appFactoryRendered = req.isojs.appFactory();
-			req.isojs.timetrace.push({
-				time: Date.now(),
-				text: 'routed + factory'
-			});
+
 			fetchAndRespond(req, res, next);
 		});
 
@@ -229,44 +223,29 @@ var render = function() {
 var fetchAndRespond = function(req, res, next) {
 	req.isojs.runs++;
 	fetchData(req, res, next, function(req, res, next) {
-		req.isojs.timetrace.push({
-			time: Date.now(),
-			text: 'fetched'
-		});
-		//console.log('fetchedData', fetchedData);
 		initializeCache(req);
 
 		var html = React.renderToString(req.isojs.appFactoryRendered);
 
 		if (interns.cache.cacheComplete === false) {
 			setNewTransmission();
-			console.log('SET TRANSMISSION ======================');
+			if(interns.config.debug){
+				isoJSlog.debug('Set new Transmissions! Turn: '+req.isojs.runs);
+			}
 		}
 		var globalStateCache = loadStates();
 		var stCache = {
 			states: globalStateCache
 		};
-		//console.log('STATES: ', JSON.stringify(stCache));
-		req.isojs.timetrace.push({
-			time: Date.now(),
-			text: 'renderToString + transmissions'
-		});
 
 		if (interns.cache.cacheComplete === false && req.isojs.runs < 5) {
 			fetchAndRespond(req, res, next);
 		} else {
-			console.log('TIMETRACE ================');
-			for (var i in req.isojs.timetrace) {
-				console.log(req.isojs.timetrace[i].time - req.isojs.timetrace[0].time, req.isojs.timetrace[i].text);
+			if(interns.config.debug){
+				isoJSlog.debug('Server-side rendered: Turns: '+req.isojs.runs);
 			}
-			console.log('TIMETRACE ================');
-
-			console.log('RENDERTIME:', Date.now() - req.isojs.timetrace[0].time, 'RELOADS', req.isojs.runs);
-
 			res.send('<!doctype html><html lang="en"><head><meta charset="utf-8">' +
-				'<title>isoJS</title>' +
-				'<link rel="stylesheet" href="/font/dosis.css"/>' +
-				'<link rel="stylesheet" href="/css/app.css"/>' +
+				interns.config.head +
 				'</head>' +
 				'<body><div id="main">' + html + '</div></body>' +
 				'<script>var globalStateCache = ' +
@@ -321,10 +300,9 @@ var fetchData = function(req, res, next, done) {
 			pendingRequest = pendingRequest.set(request.headers);
 		}
 		if (request._id != null) {
-			console.log('This Shoud NOT HAPPEN!');
+			isoJSlog.error('(fetchDataThis): request._id !== null => Shoud NOT HAPPEN! Please create a GitHub issue.');
 			delete request._id;
 		}
-		//console.log('FET', JSON.stringify(request));
 		request._id = hashRequest(request);
 		j++;
 		if (req.isojs.fetchedData[request._id] == null) {
@@ -347,10 +325,12 @@ var fetchData = function(req, res, next, done) {
 	if (j < 1) {
 		done(req, res, next);
 	}
-	req.isojs.timetrace.push({
-		time: Date.now(),
-		text: 'fetchInitialized'
-	});
+	if (interns.config.debug) {
+		req.isojs.timetrace.push({
+			time: Date.now(),
+			text: 'fetchInitialized'
+		});
+	}
 };
 
 var loadStates = function() {
