@@ -109,14 +109,14 @@ var createServer = function(config) {
 	var appText = "var isojs = require('isojs'); isojs.checkLocation.setClient(); var React = require('react'); var Router = require('react-router'); var routes = require('" + directPath + "'); Router.run(routes, Router.HistoryLocation, function (Handler) { React.render(<Handler/>, document.getElementById('main')); });";
 
 
-	fs.outputFile('./build/app.js', appText, function(err) {
+	fs.outputFile(__dirname+'/build/app.js', appText, function(err) {
 		if (err) {
 			return isoJSlog.error('(createServer): Failed to create build dir: "' + interns.config.buildPath + 'app.js"!', err);
 		}
 
 		isoJSlog.log('2. Build browserify bundle...');
 
-		exec('node builder.js', {
+		exec('node builder.js '+__dirname+'/build', {
 			cwd: __dirname+'/src'
 		}, function(error, stdout, stderr) {
 			if (error) {
@@ -128,7 +128,7 @@ var createServer = function(config) {
 			if (interns.config.uglify) {
 				isoJSlog.log('APP Ready! :) [bundle not minifyed]');
 				isoJSlog.log('3. Build minifyed bundle...');
-				exec('node minify.js', {
+				exec('node minify.js '+__dirname+'/build', {
 					cwd: __dirname+'/src'
 				}, function(error, stdout, stderr) {
 					if (error) {

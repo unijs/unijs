@@ -1,8 +1,9 @@
 var browserify = require('browserify');
 var fs = require('fs');
+var path = process.argv[0];
 
-var fName = '../build/bundle.js';
-var fNameMin = '../build/bundle.min.js';
+var fName = path+'/bundle.js';
+var fNameMin = path+'/bundle.min.js';
 
 var b = browserify();
 b.add('../build/app.js');
