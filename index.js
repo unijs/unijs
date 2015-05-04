@@ -1,3 +1,7 @@
+require("node-jsx").install({
+	extension: ".js"
+});
+
 var checkLocation = require('./src/checkLocation.js');
 
 var React = require('react');

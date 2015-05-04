@@ -1,54 +1,54 @@
 {
-	"name": "isojs",
-	"version": "0.0.2",
-	"description": "Renders reactJS apps isomorphic on node.js without big app changes.",
-	"main": "index.js",
-	"files": [
-		"index.js",
-		"LICENSE",
-      "README.md",
-      "src/",
-      "isojsBuild/builder.js",
-      "isojsBuild/minify.js"
-	],
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/dustin-H/isojs.git"
-	},
-	"keywords": [
-		"react",
-		"flux",
-		"isomorphic",
-		"node",
-		"nodejs",
-		"serverrendering",
-		"clientrendering"
-	],
-	"author": "Dustin Hoffner",
-	"license": "Apache License Version 2.0",
-	"bugs": {
-		"url": "https://github.com/dustin-H/isojs/issues"
-	},
-	"homepage": "https://github.com/dustin-H/isojs",
-	"dependencies": {
-		"browserify": "^6.2.0",
-		"envify": "^3.0.0",
-		"express": "4.12.3",
-		"fs-extra": "^0.18.2",
-		"node-jsx": "^0.12.4",
-		"react": "0.13.2",
-		"reactify": "^0.15.2",
-		"superagent": "^1.2.0",
-		"uglify-js": "~2.4.15",
-		"url": "^0.10.3"
-	},
-	"browserify": {
-		"transform": [
-			"reactify",
-			"envify"
-		]
-	}
+  "name": "isojs",
+  "version": "0.0.3",
+  "description": "Renders reactJS apps isomorphic on node.js without big app changes.",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "src/",
+    "isojsBuild/builder.js",
+    "isojsBuild/minify.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dustin-H/isojs.git"
+  },
+  "keywords": [
+    "react",
+    "flux",
+    "isomorphic",
+    "node",
+    "nodejs",
+    "serverrendering",
+    "clientrendering"
+  ],
+  "author": "Dustin Hoffner",
+  "license": "Apache License Version 2.0",
+  "bugs": {
+    "url": "https://github.com/dustin-H/isojs/issues"
+  },
+  "homepage": "https://github.com/dustin-H/isojs",
+  "dependencies": {
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "express": "4.12.3",
+    "fs-extra": "^0.18.2",
+    "node-jsx": "^0.12.4",
+    "react": "0.13.2",
+    "reactify": "^0.15.2",
+    "superagent": "^1.2.0",
+    "uglify-js": "~2.4.15",
+    "url": "^0.10.3"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  }
 }
