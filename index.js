@@ -103,7 +103,8 @@ var createServer = function(config) {
 		var directPath = process.cwd() + '/' + interns.config.routesPath;
 		interns.routes = requireNodeJsOnly(directPath);
 	} catch (err) {
-		return isoJSlog.error('(createServer): Could not find routes at "' + directPath + '"!');
+		isoJSlog.error('(createServer): Could not load routes from "' + directPath + '"!');
+		return console.error(err);
 	}
 	var appText = "var isojs = require('../isojs.js'); isojs.checkLocation.setClient(); var React = require('react'); var Router = require('react-router'); var routes = require('" + directPath + "'); Router.run(routes, Router.HistoryLocation, function (Handler) { React.render(<Handler/>, document.getElementById('main')); });";
 
