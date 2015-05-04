@@ -6,7 +6,7 @@ var fName = path+'/bundle.js';
 var fNameMin = path+'/bundle.min.js';
 
 var b = browserify();
-b.add('../build/app.js');
+b.add(path+'/app.js');
 var ws = fs.createWriteStream(fName);
 ws.on('finish', function(){
 	console.log('finish');
