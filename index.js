@@ -1,6 +1,4 @@
-require("node-jsx").install({
-	extension: ".js"
-});
+var requireNodeJsOnly = require;
 
 var checkLocation = require('./src/checkLocation.js');
 
@@ -8,8 +6,6 @@ var React = require('react');
 var Router = require('react-router');
 var superagent = require('superagent');
 var url = require('url');
-
-var requireNodeJsOnly = require;
 
 var colors, express, fs, exec;
 
@@ -29,6 +25,9 @@ var isoJSlog = {
 };
 
 checkLocation.on('setServer', function() {
+	requireNodeJsOnly("node-jsx").install({
+		extension: ".js"
+	});
 	colors = requireNodeJsOnly('colors');
 	express = requireNodeJsOnly('express');
 	fs = requireNodeJsOnly('fs-extra');
