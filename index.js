@@ -325,12 +325,6 @@ var fetchData = function(req, res, next, done) {
 	if (j < 1) {
 		done(req, res, next);
 	}
-	if (interns.config.debug) {
-		req.isojs.timetrace.push({
-			time: Date.now(),
-			text: 'fetchInitialized'
-		});
-	}
 };
 
 var loadStates = function() {
