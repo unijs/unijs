@@ -1,6 +1,6 @@
 {
   "name": "isojs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Renders reactJS apps isomorphic on node.js without big app changes.",
   "main": "index.js",
   "files": [
@@ -40,6 +40,7 @@
     "fs-extra": "^0.18.2",
     "node-jsx": "^0.12.4",
     "react": "0.13.2",
+    "react-router": "^0.13.3",
     "reactify": "^0.15.2",
     "superagent": "^1.2.0",
     "uglify-js": "~2.4.15",
