@@ -120,7 +120,9 @@ var createServer = function(config) {
 			cwd: './isojsBuild'
 		}, function(error, stdout, stderr) {
 			if (error) {
-				return isoJSlog.error('(createServer): Failed to build browserify bundle...');
+				isoJSlog.error('(createServer): Failed to build browserify bundle...')
+				console.error(error)
+				return console.error(stderr);
 			}
 			interns.buildState++;
 			if (interns.config.uglify) {
