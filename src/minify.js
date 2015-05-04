@@ -1,6 +1,6 @@
 var uglify = require("uglify-js");
 var fs = require('fs');
-var path = process.argv[0];
+var path = process.argv[2];
 
 var fName = path+'/bundle.js';
 var fNameMin = path+'/bundle.min.js';

@@ -1,6 +1,6 @@
 {
   "name": "isojs",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Renders reactJS apps isomorphic on node.js without big app changes.",
   "main": "index.js",
   "files": [
