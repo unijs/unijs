@@ -168,7 +168,7 @@ var render = function() {
 			file = "bundle.min.js";
 		}
 
-		fs.readFile('./isojsBuild/' + file, function(err, data) {
+		fs.readFile(__dirname+'/build/' + file, function(err, data) {
 			if (err) {
 				res.writeHead(404);
 				return res.end("File not found.");
