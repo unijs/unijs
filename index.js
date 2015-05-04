@@ -25,13 +25,13 @@ var isoJSlog = {
 };
 
 checkLocation.on('setServer', function() {
-	requireNodeJsOnly("node-jsx").install({
-		extension: ".js"
-	});
 	colors = requireNodeJsOnly('colors');
 	express = requireNodeJsOnly('express');
 	fs = requireNodeJsOnly('fs-extra');
 	exec = requireNodeJsOnly('child_process').exec;
+	requireNodeJsOnly("node-jsx").install({
+		extension: ".js"
+	});
 	isoJSlog = {
 		log: function(text) {
 			console.log('  isoJS: log    >'.green.bold, text);
@@ -108,15 +108,15 @@ var createServer = function(config) {
 	var appText = "var isojs = require('isojs'); isojs.checkLocation.setClient(); var React = require('react'); var Router = require('react-router'); var routes = require('" + directPath + "'); Router.run(routes, Router.HistoryLocation, function (Handler) { React.render(<Handler/>, document.getElementById('main')); });";
 
 
-	fs.outputFile(__dirname+'/build/app.js', appText, function(err) {
+	fs.outputFile(__dirname + '/build/app.js', appText, function(err) {
 		if (err) {
 			return isoJSlog.error('(createServer): Failed to create build dir: "' + interns.config.buildPath + 'app.js"!', err);
 		}
 
 		isoJSlog.log('2. Build browserify bundle...');
 
-		exec('node builder.js '+__dirname+'/build', {
-			cwd: __dirname+'/src'
+		exec('node builder.js ' + __dirname + '/build', {
+			cwd: __dirname + '/src'
 		}, function(error, stdout, stderr) {
 			if (error) {
 				isoJSlog.error('(createServer): Failed to build browserify bundle...')
@@ -127,8 +127,8 @@ var createServer = function(config) {
 			if (interns.config.uglify) {
 				isoJSlog.log('APP Ready! :) [bundle not minifyed]');
 				isoJSlog.log('3. Build minifyed bundle...');
-				exec('node minify.js '+__dirname+'/build', {
-					cwd: __dirname+'/src'
+				exec('node minify.js ' + __dirname + '/build', {
+					cwd: __dirname + '/src'
 				}, function(error, stdout, stderr) {
 					if (error) {
 						return isoJSlog.error('(createServer): Failed to build browserify bundle...');
@@ -167,7 +167,7 @@ var render = function() {
 			file = "bundle.min.js";
 		}
 
-		fs.readFile(__dirname+'/build/' + file, function(err, data) {
+		fs.readFile(__dirname + '/build/' + file, function(err, data) {
 			if (err) {
 				res.writeHead(404);
 				return res.end("File not found.");

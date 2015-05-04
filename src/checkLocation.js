@@ -4,12 +4,10 @@ var m = {
 	events: {},
 	setServer: function(data){
 		this.server = true;
-		console.log('SET SERVER');
 		this.trigger('setServer', data);
 	},
 	setClient: function(data){
 		this.server = false;
-		console.log('SET CLIENT');
 		this.trigger('setClient', data);
 	},
 	isServer: function(){
