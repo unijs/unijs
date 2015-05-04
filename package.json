@@ -1,0 +1,28 @@
+{
+  "name": "isojs",
+  "version": "0.0.1",
+  "description": "Renders reactJS apps isomorphic on node.js without big app changes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dustin-H/isojs.git"
+  },
+  "keywords": [
+    "react",
+    "flux",
+    "isomorphic",
+    "node",
+    "nodejs",
+    "serverrendering",
+    "clientrendering"
+  ],
+  "author": "Dustin Hoffner",
+  "license": "Apache License Version 2.0",
+  "bugs": {
+    "url": "https://github.com/dustin-H/isojs/issues"
+  },
+  "homepage": "https://github.com/dustin-H/isojs"
+}
