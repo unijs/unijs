@@ -7,7 +7,7 @@ var Router = require('react-router');
 var superagent = require('superagent');
 var url = require('url');
 
-var colors, express, fs, exec;
+var colors, express, fs, exec, emitter;
 
 var isoJSlog = {
 	log: function(text) {
@@ -29,6 +29,7 @@ checkLocation.on('setServer', function() {
 	express = requireNodeJsOnly('express');
 	fs = requireNodeJsOnly('fs-extra');
 	exec = requireNodeJsOnly('child_process').exec;
+	emitter = requireNodeJsOnly('events').EventEmitter
 	requireNodeJsOnly("node-jsx").install({
 		extension: ".js"
 	});
@@ -127,6 +128,7 @@ var createServer = function(config) {
 				return console.error(stderr);
 			}
 			interns.buildState++;
+			emitter.emit('renderState1');
 			if (interns.config.uglify) {
 				isoJSlog.log('APP Ready! :) [bundle not minifyed]');
 				isoJSlog.log('3. Build minifyed bundle...');
@@ -137,6 +139,7 @@ var createServer = function(config) {
 						return isoJSlog.error('(createServer): Failed to build browserify bundle...');
 					}
 					interns.buildState++;
+					emitter.emit('renderState2');
 					isoJSlog.log('APP Ready! :) [bundle minifyed]');
 				});
 			} else {
@@ -158,7 +161,8 @@ var render = function() {
 
 	app.use(function(req, res, next) {
 		if (interns.buildState < 1) {
-			res.status(503).send('<h1>ERROR: 503 Service Unavailable</h1><br><h4>The isoJS server is still building the webapp. Try again in a about a minute.</h4>');
+			emitter.once('renderState1', next);
+			//res.status(503).send('<font family="Arial"><h1>ERROR: 503 Service Unavailable</h1><br><h4>The isoJS server is still building the webapp. Try again in a about a minute.</h4></font>');
 		} else {
 			next();
 		}
@@ -279,7 +283,7 @@ var fetchData = function(req, res, next, done) {
 				pendingRequest = pendingRequest.post(reqUrl);
 				break;
 			default:
-				console.info('Not supported request method! (' + request.method + ') isoJS Info: If you need support for this method, please open a GitHub Issue.');
+				isoJSlog.warn('Not supported request method! (' + request.method + ') isoJS Info: If you need support for this method, please open a GitHub Issue.');
 				break;
 		}
 		pendingRequest = pendingRequest.query(request.qs);
