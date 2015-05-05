@@ -7,7 +7,7 @@ var Router = require('react-router');
 var superagent = require('superagent');
 var url = require('url');
 
-var colors, express, fs, exec, emitter;
+var colors, express, fs, exec, events, emitter;
 
 var isoJSlog = {
 	log: function(text) {
@@ -29,7 +29,8 @@ checkLocation.on('setServer', function() {
 	express = requireNodeJsOnly('express');
 	fs = requireNodeJsOnly('fs-extra');
 	exec = requireNodeJsOnly('child_process').exec;
-	emitter = requireNodeJsOnly('events').EventEmitter
+	events = requireNodeJsOnly('events');
+	emitter = new events.EventEmitter();
 	requireNodeJsOnly("node-jsx").install({
 		extension: ".js"
 	});
