@@ -2,7 +2,9 @@ var transmissions = {};
 
 var setTransmission = function(id, transmission, done) {
 	transmissions[id] = transmission;
-	done();
+	if (done != null) {
+		done();
+	}
 };
 
 var getTransmission = function(id, done) {

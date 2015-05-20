@@ -61,7 +61,7 @@ var replaceValueInRequest = function(requestPattern, value, valueName) {
 	return requestPattern;
 };
 
-var setNewTransmission = function() {
+var setNewTransmission = function(done) {
 	var transmission = [];
 	for (var i in workData.cache.requests) {
 		var requestPattern = {
@@ -78,7 +78,7 @@ var setNewTransmission = function() {
 		transmission.push(requestPattern);
 	}
 	if (transmission.length > 0) {
-		transmissionStore.setTransmission(workData.cache.unifyedRoute, transmission);
+		transmissionStore.setTransmission(workData.cache.unifyedRoute, transmission, done);
 	}
 };
 
