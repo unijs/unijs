@@ -3,19 +3,19 @@ var React = require('react');
 var fetchData = require('./fetchData.js');
 var workData = require('./workData.js');
 var renderCycleHelpers = require('./renderCycleHelpers.js');
-var transmissionsAlgorythm = require('./transmissionAlgorythm.js');
+var transmissionAlgorythm = require('./transmissionAlgorythm.js');
 var isoJsLog = require('./isoJsLog.js');
 var response = require('./response.js');
 
 var renderCycleRun = function(req, res, next, callback) {
 	req.isojs.runs++;
 	fetchData(req, res, next, function(req, res, next) {
-		cacheControl.initializeCache(req);
+		renderCycleHelpers.initializeCache(req);
 
 		var html = React.renderToString(req.isojs.appFactoryRendered);
 
 		if (workData.cache.cacheComplete === false) {
-			transmissionsAlgorythm.setNewTransmission();
+			transmissionAlgorythm.setNewTransmission();
 			if (workData.config.debug) {
 				isoJsLog.debug('Set new Transmissions! Turn: ' + req.isojs.runs);
 			}
