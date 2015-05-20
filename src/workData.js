@@ -13,4 +13,4 @@ var workData = {
 	configRequierements: ['routes']
 };
 
-module.exports = {};
+module.exports = workData;

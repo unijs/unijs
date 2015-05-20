@@ -1,4 +1,3 @@
-
 var checkLocation = require('./checkLocation.js');
 var requireNodeJsOnly = require;
 var colors;
@@ -20,19 +19,17 @@ var isoJsLog = {
 
 checkLocation.on('setServer', function() {
 	colors = requireNodeJsOnly('colors');
-	isoJsLog = {
-		log: function(text) {
-			console.log('  isoJS: log    >'.green.bold, text);
-		},
-		error: function(text) {
-			console.log('  isoJS: error  >'.red.bold, text.red.underline);
-		},
-		warn: function(text) {
-			console.log('  isoJS: warn   >'.yellow.bold, text.yellow);
-		},
-		debug: function(text) {
-			console.log('  isoJS: debug  >'.magenta.bold, text);
-		}
+	isoJsLog.log = function(text) {
+		console.log('  isoJS: log    >'.green.bold, text);
+	};
+	isoJsLog.error = function(text) {
+		console.log('  isoJS: error  >'.red.bold, text.red.underline);
+	};
+	isoJsLog.warn = function(text) {
+		console.log('  isoJS: warn   >'.yellow.bold, text.yellow);
+	};
+	isoJsLog.debug = function(text) {
+		console.log('  isoJS: debug  >'.magenta.bold, text);
 	};
 });
 
