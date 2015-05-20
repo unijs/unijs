@@ -34,6 +34,6 @@ checkLocation.on('setServer', function() {
 			console.log('  isoJS: debug  >'.magenta.bold, text);
 		}
 	};
-}
+});
 
 module.exports = isoJsLog;

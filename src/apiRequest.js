@@ -50,3 +50,4 @@ var sendApiRequest = function(req, request, done) {
 		done(req, request);
 	}
 }
+module.exports = sendApiRequest;
