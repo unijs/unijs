@@ -15,6 +15,14 @@ var isoJsMiddleware = function(req, res, next, callback){
 	if (req.isojs.fetchedData == null) {
 		req.isojs.fetchedData = {};
 	}
+	if (workData.config.debug && req.isojs.debugData== null) {
+		req.isojs.debugData = {
+			reactStarts: [],
+			reactStops: [],
+			start: Date.now(),
+			stop: 0
+		};
+	}
 	if(req.isojs.error == null){
 		req.isojs.error = function(error){
 			res.send('isoJS: An error occurred while rendering! ERROR: '+JSON.stringify(error));

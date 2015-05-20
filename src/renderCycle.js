@@ -12,7 +12,15 @@ var renderCycleRun = function(req, res, next, callback) {
 	fetchData(req, res, next, function(req, res, next) {
 		renderCycleHelpers.initializeCache(req);
 
+		if (workData.config.debug) {
+			req.isojs.debugData.reactStarts.push(Date.now());
+		}
+
 		var html = React.renderToString(req.isojs.appFactoryRendered);
+
+		if (workData.config.debug) {
+			req.isojs.debugData.reactStops.push(Date.now());
+		}
 
 		if (workData.cache.cacheComplete === false) {
 			transmissionAlgorythm.setNewTransmission();
@@ -31,7 +39,21 @@ var renderCycleRun = function(req, res, next, callback) {
 			renderCycleRun(req, res, next, callback);
 		} else {
 			if (workData.config.debug) {
-				isoJsLog.debug('Server-side rendered: Turns: ' + req.isojs.runs);
+				req.isojs.debugData.stop = Date.now();
+				var totalRender = req.isojs.debugData.stop - req.isojs.debugData.start;
+				var sum = 0;
+				for (var i in req.isojs.debugData.reactStarts) {
+					if (req.isojs.debugData.reactStops[i] != null) {
+						sum += (req.isojs.debugData.reactStops[i] - req.isojs.debugData.reactStarts[i]);
+					}
+				}
+				if(req.isojs.debugData.reactStarts.length > 0){
+					var reactRenderTime = sum/req.isojs.debugData.reactStarts.length;
+				} else {
+					var reactRenderTime = 0;
+				}
+				var reactRenderTime = req.isojs.debugData.stop - req.isojs.debugData.start;
+				isoJsLog.debug('Server-side rendered: Turns: ' + req.isojs.runs + ' Middle React-Rendertime: ' + reactRenderTime + ' Total Rendertime: ' + totalRender);
 			}
 			if (callback != null && typeof callback === 'function') {
 				callback(req, res, next);
