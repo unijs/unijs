@@ -62,6 +62,7 @@ var replaceValueInRequest = function(requestPattern, value, valueName) {
 };
 
 var setNewTransmission = function(done) {
+	console.log('workData', workData);
 	var transmission = [];
 	for (var i in workData.cache.requests) {
 		var requestPattern = {
