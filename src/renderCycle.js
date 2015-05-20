@@ -24,8 +24,8 @@ var renderCycleRun = function(req, res, next, callback) {
 		var stCache = {
 			states: globalStateCache
 		};
-		req.isojs.state = stCache;
-		req.isojs.html = html;
+		req.isojs.reactState = stCache;
+		req.isojs.reactHtml = html;
 
 		if (workData.cache.cacheComplete === false && req.isojs.runs < workData.config.maxRuns) {
 			renderCycleRun(req, res, next, callback);
