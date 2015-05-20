@@ -28,7 +28,7 @@ var renderCycleRun = function(req, res, next, callback) {
 		req.isojs.html = html;
 
 		if (workData.cache.cacheComplete === false && req.isojs.runs < 5) {
-			renderCycle(req, res, next, callback);
+			renderCycleRun(req, res, next, callback);
 		} else {
 			if (workData.config.debug) {
 				isoJsLog.debug('Server-side rendered: Turns: ' + req.isojs.runs);
