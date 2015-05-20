@@ -1,11 +1,11 @@
 var transmissions = {};
 
-var setTransmission(id, transmission, done) {
+var setTransmission = function(id, transmission, done) {
 	transmissions[id] = transmission;
 	done();
 };
 
-var getTransmission(id, done) {
+var getTransmission = function(id, done) {
 	if (transmissions[id] != null) {
 		done(null, transmissions[id]);
 	} else {
