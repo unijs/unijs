@@ -3,7 +3,7 @@ var React = require('react');
 var fetchData = require('./fetchData.js');
 var workData = require('./workData.js');
 var renderCycleHelpers = require('./renderCycleHelpers.js');
-var transmissionsAlgorythm = require('./transmissionsAlgorythm.js');
+var transmissionsAlgorythm = require('./transmissionAlgorythm.js');
 var isoJsLog = require('./isoJsLog.js');
 var response = require('./response.js');
 

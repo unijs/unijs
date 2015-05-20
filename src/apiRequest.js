@@ -1,8 +1,9 @@
 var superagent = require('superagent');
 var hashRequest = require('./hash.js').request;
+var workData = require('./workData.js');
 
 var sendApiRequest = function(req, request, done) {
-	var reqUrl = url.resolve(interns.config.getApiServerAddress(), request.url);
+	var reqUrl = url.resolve(workData.config.getApiServerAddress(), request.url);
 	var pendingRequest = superagent;
 	switch (request.method.toUpperCase()) {
 		case 'GET':
