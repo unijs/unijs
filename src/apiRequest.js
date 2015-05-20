@@ -1,6 +1,7 @@
 var superagent = require('superagent');
 var hashRequest = require('./hash.js').request;
 var workData = require('./workData.js');
+var url = require('url');
 
 var sendApiRequest = function(req, request, done) {
 	var reqUrl = url.resolve(workData.config.getApiServerAddress(), request.url);
