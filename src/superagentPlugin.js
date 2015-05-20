@@ -1,6 +1,7 @@
 var checkLocation = require('./checkLocation.js');
 var workData = require('./workData.js');
 var hashRequest = require('./hash.js').request;
+var url = require('url');
 
 var superagentPlugin = function(request) {
 	if (checkLocation.isServer()) {
@@ -34,7 +35,7 @@ var superagentPlugin = function(request) {
 						}
 					}
 				}
-				
+
 				minReq._id = hashRequest(minReq);
 				var wasCached = false;
 				if (workData.cache.fetchedData[minReq._id]) {
