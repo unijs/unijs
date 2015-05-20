@@ -37,6 +37,7 @@ checkLocation.on('setServer', function() {
 });
 
 var appBuilder = function(config) {
+	checkLocation.setServer();
 	isoJsLog.log('Initializing app...');
 	if (config == null && interns.configRequierements.length > 0) {
 		return isoJsLog.error('(appBuilder): Expected an config object!');
