@@ -12,12 +12,13 @@ var fetchData = function(req, res, next, callback) {
 		var fetchedData = {};
 		var j = 0;
 		for (var i in transmission) {
+			j++;
 			var replacements = transmission[i].replacements;
 			var request = JSON.parse(JSON.stringify(transmission[i].req));
 			request = applyTransmission(req.isojs.state, request, replacements);
 
 			apiRequest(req, request, function(req, request) {
-				j++;
+				j--;
 				if (j < 1) {
 					callback(req, res, next);
 				}

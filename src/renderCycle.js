@@ -27,7 +27,7 @@ var renderCycleRun = function(req, res, next, callback) {
 		req.isojs.state = stCache;
 		req.isojs.html = html;
 
-		if (workData.cache.cacheComplete === false && req.isojs.runs < 5) {
+		if (workData.cache.cacheComplete === false && req.isojs.runs < workData.config.maxRuns) {
 			renderCycleRun(req, res, next, callback);
 		} else {
 			if (workData.config.debug) {
