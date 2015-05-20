@@ -16,7 +16,7 @@ var isoJsMiddleware = function(req, res, next, callback){
 		req.isojs.fetchedData = {};
 	}
 	if(req.isojs.error == null){
-		req.isojs.error: function(error){
+		req.isojs.error = function(error){
 			res.send('isoJS: An error occurred while rendering! ERROR: '+JSON.stringify(error));
 		}
 	}
