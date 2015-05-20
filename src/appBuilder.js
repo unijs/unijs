@@ -149,7 +149,9 @@ var render = function() {
 		});
 	});
 
-	app.use(interns.middleware);
+	app.use(function(req, res, next){
+		interns.middleware(req, res, next);
+	});
 	return app;
 };
 
