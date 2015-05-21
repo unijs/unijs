@@ -1,5 +1,5 @@
 var superagent = require('superagent');
-var hashRequest = require('./hash.js').request;
+var hashObject = require('./hash.js').request;
 var workData = require('./workData.js');
 var url = require('url');
 
@@ -38,7 +38,7 @@ var sendApiRequest = function(req, request, done) {
 		isoJSlog.error('(fetchDataThis): request._id !== null => Shoud NOT HAPPEN! Please create a GitHub issue.');
 		delete request._id;
 	}
-	request._id = hashRequest(request);
+	request._id = hashObject(request);
 	if (req.isojs.fetchedData[request._id] == null) {
 		pendingRequest.end(function(superErr, superRes) {
 			req.isojs.fetchedData[request._id] = {

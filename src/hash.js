@@ -1,4 +1,4 @@
-var hashRequest = function(req) {
+var hashObject = function(req) {
 	var hash = '#' + hashCode(JSON.stringify(req)) + '#'
 		//console.log(hash);
 	return hash;
@@ -17,6 +17,6 @@ var hashCode = function(e) {
 };
 
 module.exports = {
-	request: hashRequest,
+	request: hashObject,
 	text: hashCode
 };

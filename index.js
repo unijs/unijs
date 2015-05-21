@@ -308,7 +308,7 @@ var fetchData = function(req, res, next, done) {
 			isoJSlog.error('(fetchDataThis): request._id !== null => Shoud NOT HAPPEN! Please create a GitHub issue.');
 			delete request._id;
 		}
-		request._id = hashRequest(request);
+		request._id = hashObject(request);
 		j++;
 		if (req.isojs.fetchedData[request._id] == null) {
 			pendingRequest.end(function(superErr, superRes) {
@@ -477,7 +477,7 @@ var superagentPlugin = function(request) {
 					}
 				}
 				//console.log('SAP', JSON.stringify(minReq));
-				minReq._id = hashRequest(minReq);
+				minReq._id = hashObject(minReq);
 
 				var wasCached = false;
 				if (interns.cache.fetchedData[minReq._id]) {
@@ -501,7 +501,7 @@ var superagentPlugin = function(request) {
 
 };
 
-var hashRequest = function(req) {
+var hashObject = function(req) {
 	var hash = '#' + hashCode(JSON.stringify(req)) + '#'
 		//console.log(hash);
 	return hash;
