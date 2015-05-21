@@ -1,6 +1,6 @@
 var checkLocation = require('./checkLocation.js');
 var workData = require('./workData.js');
-var hashObject = require('./hash.js').request;
+var hashObject = require('./hash.js').object;
 var url = require('url');
 
 var superagentPlugin = function(request) {

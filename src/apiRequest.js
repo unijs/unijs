@@ -1,5 +1,5 @@
 var superagent = require('superagent');
-var hashObject = require('./hash.js').request;
+var hashObject = require('./hash.js').object;
 var workData = require('./workData.js');
 var url = require('url');
 
