@@ -1,7 +1,7 @@
 
 var transmissionStore = require('./transmissionStore.js');
 var workData = require('./workData.js');
-var hashObject = require('./hash.js').hashObject;
+var hashObject = require('./hash.js').object;
 
 var applyTransmission = function(state, req, replacements) {
 	//console.log("APTRA", state, req, replacements);

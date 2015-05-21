@@ -1,5 +1,8 @@
-var hashObject = function(req) {
-	var hash = '#' + hashCode(JSON.stringify(req)) + '#'
+
+var isoJsLog = require('./isoJsLog.js');
+
+var hashObject = function(obj) {
+	var hash = '#' + hashCode(JSON.stringify(obj)) + '#'
 		//console.log(hash);
 	return hash;
 };
@@ -16,7 +19,13 @@ var hashCode = function(e) {
 	} catch (e) {}
 };
 
+var hashRequestWrapper = function(obj) {
+	isoJsLog.warn('hash.request is deprecated! Do not use it anymore!');
+	return hashObject(obj);
+}
+
 module.exports = {
-	request: hashObject,
+	request: hashRequestWrapper,
+	object: hashObject,
 	text: hashCode
 };
