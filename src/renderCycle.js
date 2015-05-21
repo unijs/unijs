@@ -52,7 +52,6 @@ var renderCycleRun = function(req, res, next, callback) {
 				} else {
 					var reactRenderTime = 0;
 				}
-				var reactRenderTime = req.isojs.debugData.stop - req.isojs.debugData.start;
 				isoJsLog.debug('Server-side rendered: Turns: ' + req.isojs.runs + ' Middle React-Rendertime: ' + reactRenderTime + ' Total Rendertime: ' + totalRender);
 			}
 			if (callback != null && typeof callback === 'function') {
