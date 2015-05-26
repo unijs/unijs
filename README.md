@@ -1,4 +1,4 @@
-# isojs
+# isoJS
 Renders [ReactJS](https://github.com/facebook/react) apps isomorphic on [node.js](https://github.com/joyent/node).
 
 isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on the server and the client without changing something in the app.
@@ -21,7 +21,7 @@ isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on th
 - You build a [React](https://github.com/facebook/react) app
 - You load your data via [superagent](https://github.com/visionmedia/superagent)
 - You build a REST API-Server for your data loading (no need to be node.js)
-- You created an isoJS-Server which handles all front-facing requests
+- You create an isoJS-Server which handles all front-facing requests
 
 ##Get Started:
 
@@ -113,6 +113,32 @@ var routes = (
 module.exports = routes;
 ```
 
-( ** *code and readme update coming soon!* ** )
+##What changed compared to a default ReactJS app?
+- Use the `isojs.loadMixin` mixin in all data loading components
+- Use the `isojs.stateMixin` mixin in all components using state
+- Use [superagent](https://github.com/visionmedia/superagent) to load your data
+- Use the `isojs.superagentPlugin` plugin to enable isomorphic rendering of this request
+
+##Performance Note:
+To be able to render your app as fast as possible try to map your route params to your api calls. Do not convert them in any way.
+
+###Do:
+`:id` and `:time` are placeholders for some kind of id and a timestamp
+
+React-Router URL | API Calls
+ --- | ---
+/blog/:id | /loadpost/:id
+/blog?id=:id | /loadpost/:id
+/blog/:id | /loadpost?id=:id
+/blog/:id?time=:time | /loadpost?id=id&time=:time
+
+###Do NOT !!!!:
+React-Router URL | API Calls
+ --- | ---
+/blog/:id/:time | /loadpost/:id/[:time/2]
+
+`[:time/2]` intents to describe the calculated half of `:time`
+
+
 
 [Apache License Version 2.0](LICENSE)
