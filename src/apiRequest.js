@@ -1,5 +1,6 @@
 var superagent = require('superagent');
 var hashObject = require('./hash.js').object;
+var isoJsLog = require('./isoJsLog.js');
 var workData = require('./workData.js');
 var url = require('url');
 
@@ -38,6 +39,22 @@ var sendApiRequest = function(req, request, done) {
 		isoJSlog.error('(fetchDataThis): request._id !== null => Shoud NOT HAPPEN! Please create a GitHub issue.');
 		delete request._id;
 	}
+	var arr = [].concat(workData.forwardHeaders);
+	if(req.headers['isojs-forward-headers'] != null){
+		try {
+			var forwardHeaders = JSON.parse(req.headers['isojs-forward-headers']);
+			arr = arr.concat(forwardHeaders);
+		} catch(e){
+			isoJsLog.error('Invalid forward header!');
+			console.error('> ', e);
+		}
+	}
+	for (var i in workData.forwardHeaders) {
+		if (req.headers[i] != null) {
+			pendingRequest = pendingRequest.set(i, req.headers[i]);
+		}
+	}
+
 	request._id = hashObject(request);
 	if (req.isojs.fetchedData[request._id] == null) {
 		pendingRequest.end(function(superErr, superRes) {

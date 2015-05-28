@@ -15,7 +15,8 @@ var interns = {
 		uglify: false,
 		debug: false,
 		head: '<title>isoJS</title>',
-		maxRuns: 5
+		maxRuns: 5,
+		forwardHeaders: ['cookie', 'user-agent']
 	},
 	configRequierements: ['routesPath'],
 	buildState: 0,

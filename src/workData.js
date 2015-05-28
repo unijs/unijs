@@ -7,7 +7,8 @@ var workData = {
 		debug: false,
 		getApiServerAddress: function() {
 			return 'http://localhost/'
-		}
+		},
+		forwardHeaders: ['cookie', 'user-agent']
 	},
 	cache: {},
 	configRequierements: ['routes']
