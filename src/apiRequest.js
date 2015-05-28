@@ -39,7 +39,8 @@ var sendApiRequest = function(req, request, done) {
 		isoJSlog.error('(fetchDataThis): request._id !== null => Shoud NOT HAPPEN! Please create a GitHub issue.');
 		delete request._id;
 	}
-	var arr = [].concat(workData.forwardHeaders);
+	
+	var arr = [].concat(workData.config.forwardHeaders);
 	if(req.headers['isojs-forward-headers'] != null){
 		try {
 			var forwardHeaders = JSON.parse(req.headers['isojs-forward-headers']);
@@ -49,9 +50,9 @@ var sendApiRequest = function(req, request, done) {
 			console.error('> ', e);
 		}
 	}
-	for (var i in workData.forwardHeaders) {
-		if (req.headers[i] != null) {
-			pendingRequest = pendingRequest.set(i, req.headers[i]);
+	for (var i in arr) {
+		if (req.headers[arr[i]] != null) {
+			pendingRequest = pendingRequest.set(arr[i], req.headers[arr[i]]);
 		}
 	}
 
