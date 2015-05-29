@@ -48,9 +48,10 @@ var config = {
 };
 ```
 
-With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!)
+With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!). To ensure, that the server-side part of isojs is available.
 
 ```js
+isojs.checkLocation.setServer();
 var isoJSapp = isojs.appBuilder(config);
 app.use(isoJSapp());
 ```
