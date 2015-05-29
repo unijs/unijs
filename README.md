@@ -1,19 +1,31 @@
-# isojs
-Renders reactJS apps isomorphic on node.js without big app changes.
+# isoJS
+Renders [ReactJS](https://github.com/facebook/react) apps isomorphic on [node.js](https://github.com/joyent/node).
 
-isojs aims to render ReactJS apps isomorphic on the server and the client without changing something in the app and without defining which data needed to be fetched on server.
+isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on the server and the client without changing something in the app.
 
-However this seems to be not possible for now.
+##Most important features:
+- **render [React](https://github.com/facebook/react) apps with async api calls isomorphic on node.js**
+- **free choice of [Flux](https://github.com/facebook/flux) implementation (or just [React](https://github.com/facebook/react))**
+- **no need to define data fetching on serverside**
+- **sync state from server rendered app to client**
 
-##Features:
-- supports nearly all flux implementations or just react (your free choice)
-- autodetects which data needs to get fetched on the server
-- you really only need to code a react app and data API's
+###What it does:
+- guesses which data needs to get fetched on the server based on the [react-router](https://github.com/rackt/react-router) route and previous requests
+- fetches all data at the same time
+- renders the [React](https://github.com/facebook/react) app and synchronous respond to [superagent](https://github.com/visionmedia/superagent) requests with the data fetched before
+- sends the rendered app including the latest state of each component back to the client
+- runs your [React](https://github.com/facebook/react) app on the client (if javascript is enabled)
 
-##Okey but what's the catch?
-- Initial data needs to be fetched via a superagent plugin.
-- Data loading components need to load a given mixin.
-- State holding components need to load a given mixin for sync state and rename the getInitialState function.
+
+###How looks a classic architecture?
+- You build a [React](https://github.com/facebook/react) app
+- You load your data via [superagent](https://github.com/visionmedia/superagent)
+- You build a REST API-Server for your data loading (no need to be node.js)
+- You create an isoJS-Server which handles all front-facing requests
+
+##Get Started:
+
+To get startet just fork the [isojs-demo-app](https://github.com/dustin-H/isojs-demo).
 
 ##Usage
 
@@ -36,16 +48,16 @@ var config = {
 };
 ```
 
-With this config you can create a new server and use it in your express app. (needs to be root!)
+With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!)
 
 ```js
-var isoJSapp = isojs.createServer(config);
+var isoJSapp = isojs.appBuilder(config);
 app.use(isoJSapp());
 ```
 
 ###Client:
 
-A component which loads data and holds state looks like that:
+A basic component that loads data and holds state looks like that:
 
 ```js
 var React = require('react');
@@ -64,10 +76,6 @@ var Blog = React.createClass({
 		.get('/blog/getpost/'+id)
 		.use(isojs.superagentPlugin)
 		.end(function(err, res){
-			if(err){
-				return this.setState({ title: '404 ERROR', content: 'Could not find Post!' });;
-				return console.error('FAIL', err);
-			}
 			this.setState(JSON.parse(res.text));
 		}.bind(this));
 	},
@@ -105,6 +113,32 @@ var routes = (
 module.exports = routes;
 ```
 
-( ** *code and readme update coming soon!* ** )
+##What changed compared to a default ReactJS app?
+- Use the `isojs.loadMixin` mixin in all data loading components
+- Use the `isojs.stateMixin` mixin in all components using state
+- Use [superagent](https://github.com/visionmedia/superagent) to load your data
+- Use the `isojs.superagentPlugin` plugin to enable isomorphic rendering of this request
+
+##Performance Note:
+To be able to render your app as fast as possible try to map your route params to your api calls. Do not convert them in any way.
+
+###Do:
+`:id` and `:time` are placeholders for some kind of id and a timestamp
+
+React-Router URL | API Calls
+ --- | ---
+/blog/:id | /loadpost/:id
+/blog?id=:id | /loadpost/:id
+/blog/:id | /loadpost?id=:id
+/blog/:id?time=:time | /loadpost?id=id&time=:time
+
+###Do NOT !!!!:
+React-Router URL | API Calls
+ --- | ---
+/blog/:id/:time | /loadpost/:id/[:time/2]
+
+`[:time/2]` intents to describe the calculated half of `:time`
+
+
 
 [Apache License Version 2.0](LICENSE)
