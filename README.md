@@ -8,7 +8,7 @@ isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on th
 
 [Repo of the Demo-App](https://github.com/dustin-H/isojs-demo)
 
-###Contribution and Ideas are welcome! ;-)
+###Contribution and Ideas are Welcome! ;-)
 Ideally just create a GitHub Issue to discuss or create a PR.
 
 ##Most important features:
