@@ -1,4 +1,5 @@
-# isoJS
+![Logo](https://raw.githubusercontent.com/dustin-H/isojs/master/logo.png)
+
 Renders [ReactJS](https://github.com/facebook/react) apps isomorphic on [node.js](https://github.com/joyent/node).
 
 isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on the server and the client without changing something in the app.
