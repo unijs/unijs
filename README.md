@@ -8,6 +8,9 @@ isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on th
 
 [Repo of the Demo-App](https://github.com/dustin-H/isojs-demo)
 
+###Contribution and Ideas are welcome! ;-)
+Ideally just create a GitHub Issue to discuss or create a PR.
+
 ##Most important features:
 - **render [React](https://github.com/facebook/react) apps with async api calls isomorphic on node.js**
 - **free choice of [Flux](https://github.com/facebook/flux) implementation (or just [React](https://github.com/facebook/react))**
