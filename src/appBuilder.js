@@ -12,6 +12,7 @@ var interns = {
 			return 'http://localhost/';
 		},
 		routesPath: './Route.js',
+		buildPath: '/../build',
 		uglify: false,
 		debug: false,
 		head: '<title>isoJS</title>',
@@ -76,9 +77,9 @@ var appBuilder = function(config) {
 
 	var appText = "var isojs = require('isojs'); isojs.checkLocation.setClient(); var React = require('react'); var Router = require('react-router'); var routes = require('" + directPath + "'); Router.run(routes, Router.HistoryLocation, function (Handler) { React.render(<Handler/>, document.getElementById('main')); });";
 
-	var appJSpath = __dirname + '/../build/app.js';
 	var srcPath = __dirname + '';
-	var buildPath = __dirname + '/../build';
+	var buildPath = srcPath + interns.config.buildPath;
+	var appJSpath = buildPath+'/app.js';
 
 	fs.outputFile(appJSpath, appText, function(err) {
 		if (err) {
