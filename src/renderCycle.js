@@ -1,7 +1,7 @@
 var React = require('react');
 
 var fetchData = require('./fetchData.js');
-var workData = require('./workData.js');
+var renderCache = require('./renderCache.js');
 var renderCycleHelpers = require('./renderCycleHelpers.js');
 var transmissionAlgorythm = require('./transmissionAlgorythm.js');
 var isoJsLog = require('./isoJsLog.js');
@@ -12,19 +12,19 @@ var renderCycleRun = function(req, res, next, callback) {
 	fetchData(req, res, next, function(req, res, next) {
 		renderCycleHelpers.initializeCache(req);
 
-		if (workData.config.debug) {
+		if (req.isojs.config.debug) {
 			req.isojs.debugData.reactStarts.push(Date.now());
 		}
 
 		var html = React.renderToString(req.isojs.appFactoryRendered);
 
-		if (workData.config.debug) {
+		if (req.isojs.config.debug) {
 			req.isojs.debugData.reactStops.push(Date.now());
 		}
 
-		if (workData.cache.cacheComplete === false) {
+		if (renderCache.cacheComplete === false) {
 			transmissionAlgorythm.setNewTransmission();
-			if (workData.config.debug) {
+			if (req.isojs.config.debug) {
 				isoJsLog.debug('Set new Transmissions! Turn: ' + req.isojs.runs);
 			}
 		}
@@ -35,10 +35,10 @@ var renderCycleRun = function(req, res, next, callback) {
 		req.isojs.reactState = stCache;
 		req.isojs.reactHtml = html;
 
-		if (workData.cache.cacheComplete === false && req.isojs.runs < workData.config.maxRuns) {
+		if (renderCache.cacheComplete === false && req.isojs.runs < req.isojs.config.maxRuns) {
 			renderCycleRun(req, res, next, callback);
 		} else {
-			if (workData.config.debug) {
+			if (req.isojs.config.debug) {
 				req.isojs.debugData.stop = Date.now();
 				var totalRender = req.isojs.debugData.stop - req.isojs.debugData.start;
 				var sum = 0;

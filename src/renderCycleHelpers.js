@@ -1,21 +1,21 @@
 
-var workData = require('./workData.js');
+var renderCache = require('./renderCache.js');
 
 var initializeCache = function(req, res, next) {
-	workData.cache.requests = [];
-	workData.cache.unifyedRoute = req.isojs.unifyedRoute;
-	workData.cache.fetchedData = req.isojs.fetchedData;
-	workData.cache.state = req.isojs.state;
-	workData.cache.req = req;
-	workData.cache.stateComponents = [];
-	workData.cache.cacheComplete = true;
+	renderCache.requests = [];
+	renderCache.unifyedRoute = req.isojs.unifyedRoute;
+	renderCache.fetchedData = req.isojs.fetchedData;
+	renderCache.state = req.isojs.state;
+	renderCache.req = req;
+	renderCache.stateComponents = [];
+	renderCache.cacheComplete = true;
 };
 
 var loadStates = function() {
 	var exportStateCache = [];
-	var len = workData.cache.stateComponents.length;
+	var len = renderCache.stateComponents.length;
 	for (var i = 0; i < len; i++) {
-		var component = workData.cache.stateComponents.pop();
+		var component = renderCache.stateComponents.pop();
 		exportStateCache.push(component.state);
 	}
 	return exportStateCache;

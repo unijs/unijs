@@ -1,11 +1,14 @@
-
 var checkLocation = require('./checkLocation.js');
-var workData = require('./workData.js');
+var renderCache = require('./renderCache.js');
 
 var loadMixin = {
 	componentWillMount: function() {
 		if (checkLocation.isServer()) {
-			this.componentDidMount();
+			if (this.isojsFetchData) {
+				this.isojsFetchData();
+			} else {
+				this.componentDidMount();
+			}
 		}
 	}
 };
@@ -13,12 +16,12 @@ var loadMixin = {
 var stateMixin = {
 	componentWillMount: function() {
 		if (checkLocation.isServer()) {
-			workData.cache.stateComponents.push(this);
+			renderCache.stateComponents.push(this);
 		}
 	},
 	getInitialState: function() {
-		if (typeof globalStateCache !== 'undefined' && globalStateCache.states && globalStateCache.states.length > 0) {
-			var state = globalStateCache.states.pop();
+		if (typeof isojsGlobalStateCache !== 'undefined' && isojsGlobalStateCache.states && isojsGlobalStateCache.states.length > 0) {
+			var state = isojsGlobalStateCache.states.pop();
 			return state;
 		} else {
 			return this.isojsInitialState(arguments);
