@@ -1,5 +1,4 @@
-var superagent = require('superagent');
-var workData = require('./workData.js');
+
 var apiRequest = require('./apiRequest.js');
 var applyTransmission = require('./transmissionAlgorythm.js').applyTransmission;
 var transmissionStore = require('./transmissionStore.js');
