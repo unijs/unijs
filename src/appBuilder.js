@@ -33,9 +33,7 @@ checkLocation.on('setServer', function() {
 	exec = requireNodeJsOnly('child_process').exec;
 	events = requireNodeJsOnly('events');
 	emitter = new events.EventEmitter();
-	requireNodeJsOnly("node-jsx").install({
-		extension: ".js"
-	});
+	requireNodeJsOnly("babel/register");
 });
 
 var appBuilder = function(config) {

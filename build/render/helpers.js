@@ -1,18 +1,19 @@
+'use strict';
 
-var renderCache = require('./renderCache.js');
+var renderCache = require('./cache.js');
 
-var initializeCache = function(req, res, next) {
+var initializeCache = function initializeCache(req, res, next) {
 	renderCache.requests = [];
-	renderCache.unifyedRoute = req.isojs.unifyedRoute;
-	renderCache.fetchedData = req.isojs.fetchedData;
-	renderCache.state = req.isojs.state;
+	renderCache.unifyedRoute = req.unijs.unifyedRoute;
+	renderCache.fetchedData = req.unijs.fetchedData;
+	renderCache.state = req.unijs.state;
 	renderCache.req = req;
 	renderCache.stateComponents = [];
 	renderCache.external = {};
 	renderCache.cacheComplete = true;
 };
 
-var loadStates = function() {
+var loadStates = function loadStates() {
 	var exportStateCache = [];
 	var len = renderCache.stateComponents.length;
 	for (var i = 0; i < len; i++) {

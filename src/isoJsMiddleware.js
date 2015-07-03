@@ -16,6 +16,12 @@ var isoJsMiddleware = function(config) {
 		if (req.isojs.fetchedData == null) {
 			req.isojs.fetchedData = {};
 		}
+		if (req.isojs.head == null) {
+			req.isojs.head = [];
+		}
+		if (req.isojs.body == null) {
+			req.isojs.body = [];
+		}
 		if (req.isojs.config.debug && req.isojs.debugData == null) {
 			req.isojs.debugData = {
 				reactStarts: [],
