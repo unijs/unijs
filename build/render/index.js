@@ -1,5 +1,8 @@
 'use strict';
 
+var fs = require('fs');
+var Router = require('react-router');
+
 var render = function render(app, options, req, res, next, callback) {
 	for (var i = 0, len = app._hostfiles.length; i < len; i++) {
 		if ('/' + app._hostfiles[i]._id + '.' + app._hostfiles[i].type === req.path) {

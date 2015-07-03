@@ -1,57 +1,50 @@
 {
-  "name": "isojs",
-  "version": "0.0.21",
-  "description": "Renders reactJS apps isomorphic on node.js without big app changes.",
-  "main": "app.js",
+  "name": "unijs",
+  "version": "0.0.22",
+  "description": "Renders reactJS apps universal on node.js without big app changes.",
+  "main": "es6Index.js",
   "files": [
-    "index.js",
-    "app.js",
+    "es6Index.js",
     "LICENSE",
     "README.md",
-    "src/"
+    "build/"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dustin-H/isojs.git"
+    "url": "https://github.com/unijs/isojs.git"
   },
   "keywords": [
     "react",
     "flux",
+    "universal",
     "isomorphic",
+    "unijs",
+    "isojs",
     "node",
     "nodejs",
+    "render",
+    "spa",
+    "single-page-application",
     "serverrendering",
     "clientrendering"
   ],
   "author": "Dustin Hoffner",
   "license": "Apache License Version 2.0",
   "bugs": {
-    "url": "https://github.com/dustin-H/isojs/issues"
+    "url": "https://github.com/dustin-H/unijs/issues"
   },
-  "homepage": "https://github.com/dustin-H/isojs",
+  "homepage": "https://github.com/unijs/isojs",
   "dependencies": {
-    "babelify": "^6.1.2",
-    "browserify": "^6.3.4",
-    "colors": "^1.1.0",
-    "envify": "^3.0.0",
-    "express": "4.12.3",
-    "fs-extra": "^0.18.2",
-    "node-jsx": "^0.12.4",
     "react": "0.13.2",
     "react-router": "^0.13.3",
     "reactify": "^0.15.2",
     "superagent": "^1.2.0",
-    "uglify-js": "~2.4.15",
     "url": "^0.10.3"
-  },
-  "browserify": {
-    "transform": [
-      "reactify",
-      "envify"
-    ]
   },
   "devDependencies": {
     "babel-core": "^5.6.15",
