@@ -24,7 +24,7 @@ var checkResource = function checkResource(path, callback) {
 
 var App = (function () {
 	function App(name) {
-		var resources = arguments[1] === undefined ? [] : arguments[1];
+		var resources = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
 		_classCallCheck(this, App);
 
@@ -32,6 +32,7 @@ var App = (function () {
 		this.body = [];
 		this.resources = resources;
 		this.Router = null;
+		this._resources = [];
 		this._name = name;
 		this._mounted = false;
 		this._hostfiles = [];
@@ -44,20 +45,23 @@ var App = (function () {
 		value: function mount(callback) {
 			this._hostfiles = [];
 			var k = 0;
-			for (var i in this.resources) {
+			var arr = this.resources.concat(this._resources);
+			for (var i in arr) {
 				k++;
-				checkResource(this.resources[i], function (err, resource) {
+				checkResource(arr[i], function (err, resource) {
 					k--;
 					if (err) {
 						return callback(err);
 					}
 					this._hostfiles.push(resource);
 					if (k < 1) {
+						this._resources = [];
 						callback();
 					}
 				});
 			}
 			if (k < 1) {
+				this._resources = [];
 				callback();
 			}
 		}

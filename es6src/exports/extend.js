@@ -1,7 +1,7 @@
 var checkLocation = require('../utils/checkLocation.js');
 var renderCache = require('../render/cache.js');
 
-var apply = function(Component, noFetch) {
+var extend = function(Component, noFetch) {
    if(noFetch == null || typeof noFetch !== 'boolean'){
       noFetch = false;
    }
@@ -32,3 +32,5 @@ var apply = function(Component, noFetch) {
 
 	return Export;
 }
+
+module.exports = extend;

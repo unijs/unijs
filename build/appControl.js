@@ -2,10 +2,12 @@
 
 var appStore = require('./appStore.js');
 var uniJsLog = require('./utils/log.js');
+var server = require('./server.js');
 
 var mount = function mount(path, app, callback) {
 	var pathlength = path.split('/').length;
-	var i = 0;
+	var i = 0,
+	    len;
 	for (i = 0, len = appStore.length; i < len; i++) {
 		if (appStore[i]._path === path) {
 			return callback('Path already registered!');
@@ -22,4 +24,24 @@ var mount = function mount(path, app, callback) {
 		}
 		app._mounted = true;
 	});
+};
+
+var unmount = function unmount(path) {
+	if (typeof path !== 'string') {
+		path = path._path;
+	}
+	var i = 0,
+	    len;
+	for (i = 0, len = appStore.length; i < len; i++) {
+		if (appStore[i]._path === path) {
+			break;
+		}
+	}
+	var app = arr.splice(i, 1);
+	app._mounted = false;
+	app._path = '';
+};
+
+module.exports = {
+	mount: mount
 };

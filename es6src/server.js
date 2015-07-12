@@ -1,18 +1,14 @@
+var App = require('./App.js');
+var appControl = require('./appControl.js');
+var requestHandler = require('./requestHandler.js');
+var cache = require('./render/cache.js');
 
-var render = require('./render/index.js');
+var m = module.exports = {};
 
-var appStore = require('./appStore.js');
-
-var server = function(options) {
-	return function(req, res, next, callback) {
-		for (var i = 0, len = appStore.length; i < len; i++) {
-			if (req.url.substr(0, appStore[i]._path.length) === appStore[i]._path) {
-				req.path = req.url.substr(appStore[i]._path.length);
-            return render(appStore[i], options, req, res, next, callback);
-			}
-		}
-		next();
-	}
+for(var i in appControl){
+   m[i] = appControl[i];
 }
-
-module.exports = server;
+m.App = App;
+m.getRequestHandler = requestHandler;
+m.render = {};
+m.render.cache = cache;

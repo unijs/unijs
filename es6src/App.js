@@ -22,6 +22,7 @@ class App {
 		this.body = [];
 		this.resources = resources;
 		this.Router = null;
+		this._resources = [];
 		this._name = name;
 		this._mounted = false;
 		this._hostfiles = [];
@@ -32,20 +33,23 @@ class App {
 	mount(callback) {
 		this._hostfiles = [];
 		var k = 0;
-		for (var i in this.resources) {
+		var arr = this.resources.concat(this._resources);
+		for (var i in arr) {
 			k++;
-			checkResource(this.resources[i], function(err, resource) {
+			checkResource(arr[i], function(err, resource) {
 				k--;
 				if (err) {
 					return callback(err);
 				}
 				this._hostfiles.push(resource)
 				if (k < 1) {
+					this._resources = [];
 					callback();
 				}
 			});
 		}
 		if (k < 1) {
+			this._resources = [];
 			callback();
 		}
 	}

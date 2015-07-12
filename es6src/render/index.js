@@ -2,29 +2,8 @@ var fs = require('fs');
 var Router = require('react-router');
 
 var render = function(app, options, req, res, next, callback) {
-	for (var i = 0, len = app._hostfiles.length; i < len; i++) {
-		if ('/' + app._hostfiles[i]._id + '.' + app._hostfiles[i].type === req.path) {
-			fs.readFile(app._hostfiles[i].path, function(err, data) {
-				if (err) {
-					res.writeHead(404);
-					return res.end("File not found.");
-				}
-				contentType;
-				switch (app._hostfiles[i].type) {
-					case 'js':
-						contentType = 'application/javascript';
-						break;
-					case 'css':
-						contentType = 'text/css';
-						break;
-					default:
-						contentType = 'text/plain';
-				}
-				res.setHeader("Content-Type", contentType);
-				res.writeHead(200);
-				res.end(data);
-			});
-		}
+	if(hostFiles(app, req, res)){
+		return;
 	}
 	if (req.unijs == null) {
 		req.unijs = {};
