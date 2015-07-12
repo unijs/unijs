@@ -2,9 +2,9 @@
   "name": "unijs",
   "version": "0.0.22",
   "description": "Renders reactJS apps universal on node.js without big app changes.",
-  "main": "es6Index.js",
+  "main": "index.js",
   "files": [
-    "es6Index.js",
+    "index.js",
     "LICENSE",
     "README.md",
     "build/"
@@ -34,7 +34,7 @@
     "clientrendering"
   ],
   "author": "Dustin Hoffner",
-  "license": "Apache License Version 2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dustin-H/unijs/issues"
   },
