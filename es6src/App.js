@@ -26,12 +26,14 @@ class App {
 		this._name = name;
 		this._mounted = false;
 		this._hostfiles = [];
+		this._head = [];
 		this._path = "";
 		this._apiUrl = "http://localhost/";
 	}
 
 	mount(callback) {
 		this._hostfiles = [];
+		this._head = [];
 		var k = 0;
 		var arr = this.resources.concat(this._resources);
 		for (var i in arr) {
@@ -41,7 +43,8 @@ class App {
 				if (err) {
 					return callback(err);
 				}
-				this._hostfiles.push(resource)
+				this._hostfiles.push(resource);
+				this._head.push(this._path + '.f/' + resource._id + '.' + resource.type);
 				if (k < 1) {
 					this._resources = [];
 					callback();

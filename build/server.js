@@ -1,6 +1,6 @@
 'use strict';
 
-var App = require('./App.ks');
+var App = require('./App.js');
 var appControl = require('./appControl.js');
 var requestHandler = require('./requestHandler.js');
 var cache = require('./render/cache.js');

@@ -3,6 +3,9 @@ var uniJsLog = require('./utils/log.js');
 var server = require('./server.js');
 
 var mount = function(path, app, callback) {
+	if (path[path.length - 1] !== '/') {
+		path += '/';
+	}
 	var pathlength = path.split('/').length;
 	var i = 0,
 		len;
