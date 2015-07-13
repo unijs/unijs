@@ -1,8 +1,8 @@
 'use strict';
 
-var checkLocation = require('./checkLocation.js');
-var renderCache = require('./renderCache.js');
-var hashObject = require('./hash.js').object;
+var checkLocation = require('../utils/checkLocation.js');
+var renderCache = require('../render/cache.js');
+var hashObject = require('../utils/hash.js').object;
 var url = require('url');
 
 var superagentPlugin = function superagentPlugin(request) {
