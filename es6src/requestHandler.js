@@ -11,7 +11,7 @@ var requestHandler = function(options) {
             return render(appStore[i], options, req, res, next, callback);
 			}
 		}
-		next();
+		//next();
 	}
 }
 
