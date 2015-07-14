@@ -22,8 +22,9 @@ var mount = function mount(path, app, callback) {
 	app._path = path;
 	appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
 	app.mount(function (err) {
-		if (err) {
-			uniJsLog.error('Could not mount app at [' + path + ']!', err);
+		if (err != null) {
+			uniJsLog.error('Could not mount app at [' + path + ']!');
+			console.log('err', err);
 		}
 		app._mounted = true;
 	});
