@@ -42,6 +42,11 @@ var App = (function () {
 	}
 
 	_createClass(App, [{
+		key: 'setApiUrl',
+		value: function setApiUrl(apiUrl) {
+			this._apiUrl = apiUrl;
+		}
+	}, {
 		key: 'mount',
 		value: function mount(callback) {
 			this._hostfiles = [];

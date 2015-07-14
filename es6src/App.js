@@ -31,6 +31,10 @@ class App {
 		this._apiUrl = "http://localhost/";
 	}
 
+	setApiUrl(apiUrl){
+		this._apiUrl = apiUrl;
+	}
+
 	mount(callback) {
 		this._hostfiles = [];
 		this._head = [];
