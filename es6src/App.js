@@ -6,8 +6,8 @@ var checkResource = function(path, callback) {
 	var fs = requireNodeJsOnly('fs');
 	fs.exists(path, function(yes) {
 		if (!yes) {
-			uniJsLog.error(`Could not load resource from [${path}]!`, err);
-			return callback(err);
+			uniJsLog.error(`Could not load resource from [${path}]!`);
+			return callback(`Could not load resource from [${path}]!`);
 		}
 		var ext = path.split('.').pop();
 		callback(null, {
