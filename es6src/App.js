@@ -51,7 +51,16 @@ class App {
 					return callback(err);
 				}
 				that._hostfiles.push(resource);
-				that._head.push(that._path + '.f/' + resource._id + '.' + resource.type);
+				switch (resource.type) {
+					case 'js':
+						that._head.push(`<script type="text/javascript" src="${that._path + '.f/' + resource._id + '.' + resource.type}"></script>`);
+						break;
+					case 'css':
+						that._head.push(`<link rel="stylesheet" type="text/css" href="${that._path + '.f/' + resource._id + '.' + resource.type}">`);
+						break;
+					default:
+						uniJsLog.warn('Resource Type is not supported!', resource)
+				}
 				if (k < 1) {
 					that._resources = [];
 					callback();
@@ -67,7 +76,7 @@ class App {
 	render(req, res, next) {
 		return {
 			head: [
-				'<meta charset="utf-8">',
+				'<meta charset="utf-8"></meta>',
 				`<script>var unijsGlobalStateCache = ${JSON.stringify(req.unijs.reactState)};</script>`
 			].concat(this.head).concat(req.unijs.head),
 			body: [
