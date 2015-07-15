@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var hostFiles = function(req, res, next) {
 	var match = false;
 	if (req.unijs._path.substr(0, 4) === "/.f/") {
