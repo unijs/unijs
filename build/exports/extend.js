@@ -34,7 +34,7 @@ var extend = function extend(Component, noFetch) {
 					renderCache.stateComponents.push(this);
 				}
 			}
-			return ret;
+			//return ret;
 		}
 
 		_createClass(Export, [{

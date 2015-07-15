@@ -15,7 +15,7 @@ var extend = function(Component, noFetch) {
 					renderCache.stateComponents.push(this);
 				}
 			}
-			return ret;
+			//return ret;
 		}
 		componentWillMount(...args) {
 			var ret = super.componentWillMount(...args);
