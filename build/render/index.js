@@ -3,7 +3,7 @@
 
 var Router = require('react-router');
 var React = require('react');
-var cycle = require('./render/cycle.js');
+var cycle = require('./cycle.js');
 
 var render = function render(req, res, next) {
 
