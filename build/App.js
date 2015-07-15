@@ -68,7 +68,7 @@ var App = (function () {
 						this._resources = [];
 						callback();
 					}
-				});
+				}).bind(this);
 			}
 			if (k < 1) {
 				this._resources = [];
