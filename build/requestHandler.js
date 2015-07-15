@@ -19,8 +19,8 @@ var requestHandler = function requestHandler(options) {
 				}
 				req.unijs.options = options;
 				req.unijs.app = appStore[i];
-				req.unijs._url = req.url.substr(appStore[i]._path.length);
-				req.unijs._path = req.path.substr(appStore[i]._path.length);
+				req.unijs._url = req.url.substr(appStore[i]._path.length - 1);
+				req.unijs._path = req.path.substr(appStore[i]._path.length - 1);
 				uniJsLog.log('Initializing Request', req.unijs);
 
 				if (hostFiles(req, res, next)) {
