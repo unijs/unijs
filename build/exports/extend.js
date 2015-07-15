@@ -34,17 +34,20 @@ var extend = function extend(Component, noFetch) {
 					renderCache.stateComponents.push(this);
 				}
 			}
-			//return ret;
+			return ret;
 		}
 
 		_createClass(Export, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-					args[_key2] = arguments[_key2];
-				}
+				var ret = null;
+				if (_get(Object.getPrototypeOf(Export.prototype), 'componentWillMount', this)) {
+					for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+						args[_key2] = arguments[_key2];
+					}
 
-				var ret = _get(Object.getPrototypeOf(Export.prototype), 'componentWillMount', this).apply(this, args);
+					ret = _get(Object.getPrototypeOf(Export.prototype), 'componentWillMount', this).apply(this, args);
+				}
 				if (checkLocation.isServer() && noFetch === false) {
 					if (this.unijsFetchData) {
 						this.unijsFetchData();
