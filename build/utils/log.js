@@ -13,7 +13,7 @@ var uniJsLog = {
 		}
 
 		for (var i in args) {
-			console.log('  #=>', toString(args[i]));
+			console.log('  #=>', args[i]);
 		}
 	},
 	error: function error(text) {
@@ -24,7 +24,7 @@ var uniJsLog = {
 		}
 
 		for (var i in args) {
-			console.log('  #=>', toString(args[i]));
+			console.log('  #=>', args[i]);
 		}
 	},
 	warn: function warn(text) {
@@ -35,7 +35,7 @@ var uniJsLog = {
 		}
 
 		for (var i in args) {
-			console.log('  #=>', toString(args[i]));
+			console.log('  #=>', args[i]);
 		}
 	},
 	debug: function debug(text) {
@@ -46,7 +46,7 @@ var uniJsLog = {
 		}
 
 		for (var i in args) {
-			console.log('  #=>', toString(args[i]));
+			console.log('  #=>', args[i]);
 		}
 	}
 };
@@ -61,7 +61,7 @@ checkLocation.on('setServer', function () {
 		}
 
 		for (var i in args) {
-			console.log('  #=>'.green.bold, toString(args[i]));
+			console.log('  #=>'.green.bold, args[i]);
 		}
 	};
 	uniJsLog.error = function (text) {
@@ -72,7 +72,7 @@ checkLocation.on('setServer', function () {
 		}
 
 		for (var i in args) {
-			console.log('  #=>'.red.bold, toString(args[i]).red.underline);
+			console.log('  #=>'.red.bold, args[i]);
 		}
 	};
 	uniJsLog.warn = function (text) {
@@ -83,7 +83,7 @@ checkLocation.on('setServer', function () {
 		}
 
 		for (var i in args) {
-			console.log('  #=>'.yellow.bold, toString(args[i]).yellow);
+			console.log('  #=>'.yellow.bold, args[i]);
 		}
 	};
 	uniJsLog.debug = function (text) {
@@ -94,7 +94,7 @@ checkLocation.on('setServer', function () {
 		}
 
 		for (var i in args) {
-			console.log('  #=>'.magenta.bold, toString(args[i]));
+			console.log('  #=>'.magenta.bold, args[i]);
 		}
 	};
 });
