@@ -1,5 +1,5 @@
 
-var apiRequest = require('./apiRequest.js');
+var apiRequest = require('../api/request.js');
 var applyTransmission = require('../transmissions/algorythm.js').applyTransmission;
 var transmissionStore = require('../transmissions/store.js');
 
