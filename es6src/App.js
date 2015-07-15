@@ -4,11 +4,11 @@ var requireNodeJsOnly = require;
 
 var checkResource = function(path, callback) {
 	var fs = requireNodeJsOnly('fs');
-	fs.exists(path, function(err) {
-		if (err) {
+	fs.exists(path, function(yes) {
+		if (!yes) {
 			uniJsLog.error(`Could not load resource from [${path}]!`, err);
-			callback(err);
-		};
+			return callback(err);
+		}
 		var ext = path.split('.').pop();
 		callback(null, {
 			_id: hashText(path),
