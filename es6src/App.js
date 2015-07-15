@@ -33,7 +33,7 @@ class App {
 		this._apiUrl = "http://localhost/";
 	}
 
-	setApiUrl(apiUrl){
+	setApiUrl(apiUrl) {
 		this._apiUrl = apiUrl;
 	}
 
@@ -74,6 +74,21 @@ class App {
 				`<div id="main">${req.unijs.reactHtml}</div>`
 			].concat(this.body).concat(req.unijs.body)
 		};
+	}
+
+	respond(req, res, next) {
+		var render = req.unijs.app.render(req, res, next);
+		var html = `
+	   <html>
+	      <head>
+	      ${render.head.join('')}
+	      </head>
+	      <body>
+	      ${render.body.join('')}
+	      </body>
+	   </html>
+	   `;
+		res.send(html);
 	}
 }
 

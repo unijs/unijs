@@ -84,6 +84,13 @@ var App = (function () {
 				body: ['<div id="main">' + req.unijs.reactHtml + '</div>'].concat(this.body).concat(req.unijs.body)
 			};
 		}
+	}, {
+		key: 'respond',
+		value: function respond(req, res, next) {
+			var render = req.unijs.app.render(req, res, next);
+			var html = '\n\t   <html>\n\t      <head>\n\t      ' + render.head.join('') + '\n\t      </head>\n\t      <body>\n\t      ' + render.body.join('') + '\n\t      </body>\n\t   </html>\n\t   ';
+			res.send(html);
+		}
 	}]);
 
 	return App;

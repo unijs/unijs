@@ -7,7 +7,7 @@ var respond = require('./respond.js');
 var transmissionAlgorythm = require('../transmissions/algorythm.js');
 var uniJsLog = require('../utils/log.js');
 
-var renderCycleRun = function(req, res, next, callback) {
+var renderCycleRun = function(req, res, next) {
 	req.unijs.runs++;
 	fetchData(req, res, next, function(req, res, next) {
 		renderCycleHelpers.initializeCache(req);
@@ -36,7 +36,7 @@ var renderCycleRun = function(req, res, next, callback) {
 		req.unijs.reactHtml = html;
 
 		if (renderCache.cacheComplete === false && req.unijs.runs < req.unijs.config.maxRuns) {
-			renderCycleRun(req, res, next, callback);
+			renderCycleRun(req, res, next);
 		} else {
 			if (req.unijs.config.debug) {
 				req.unijs.debugData.stop = Date.now();
@@ -54,11 +54,7 @@ var renderCycleRun = function(req, res, next, callback) {
 				}
 				uniJsLog.debug('Server-side rendered: Turns: ' + req.unijs.runs + ' Middle React-Rendertime: ' + reactRenderTime + ' Total Rendertime: ' + totalRender);
 			}
-			if (callback != null && typeof callback === 'function') {
-				callback(req, res, next);
-			} else {
-				respond(req, res, next);
-			}
+			req.unijs.app.respond(req, res, next);
 		}
 	});
 };

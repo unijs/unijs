@@ -3,7 +3,7 @@
 var fs = require('fs');
 var Router = require('react-router');
 
-var render = function render(app, options, req, res, next, callback) {
+var render = function render(app, options, req, res, next) {
 	if (hostFiles(app, req, res)) {
 		return;
 	}
@@ -59,7 +59,7 @@ var render = function render(app, options, req, res, next, callback) {
 		req.unijs.appFactory = React.createFactory(Handler);
 		req.unijs.appFactoryRendered = req.unijs.appFactory();
 
-		renderCycle.run(req, res, next, callback);
+		renderCycle.run(req, res, next);
 	});
 };
 
