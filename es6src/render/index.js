@@ -1,5 +1,7 @@
 //var fs = require('fs');
 var Router = require('react-router');
+var React = require('react');
+var cycle = require('./render/cycle.js');
 
 var render = function(req, res, next) {
 
@@ -50,7 +52,7 @@ var render = function(req, res, next) {
 		req.unijs.appFactory = React.createFactory(Handler);
 		req.unijs.appFactoryRendered = req.unijs.appFactory();
 
-		renderCycle.run(req, res, next);
+		cycle.run(req, res, next);
 	});
 }
 

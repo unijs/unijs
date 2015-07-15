@@ -2,6 +2,8 @@
 'use strict';
 
 var Router = require('react-router');
+var React = require('react');
+var cycle = require('./render/cycle.js');
 
 var render = function render(req, res, next) {
 
@@ -52,7 +54,7 @@ var render = function render(req, res, next) {
 		req.unijs.appFactory = React.createFactory(Handler);
 		req.unijs.appFactoryRendered = req.unijs.appFactory();
 
-		renderCycle.run(req, res, next);
+		cycle.run(req, res, next);
 	});
 };
 
