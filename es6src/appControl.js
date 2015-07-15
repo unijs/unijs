@@ -3,6 +3,7 @@ var uniJsLog = require('./utils/log.js');
 var server = require('./server.js');
 
 var mount = function(path, app, callback) {
+	uniJsLog.log('Mounting APP...');
 	if (path[path.length - 1] !== '/') {
 		path += '/';
 	}
@@ -21,8 +22,9 @@ var mount = function(path, app, callback) {
 	appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
 	app.mount(function(err) {
 		if (err != null) {
-			uniJsLog.error(`Could not mount app at [${path}]!`, err);
+			return uniJsLog.error(`Could not mount app at [${path}]!`, err);
 		}
+		uniJsLog.log('APP Mounted!');
 		app._mounted = true;
 	});
 }
