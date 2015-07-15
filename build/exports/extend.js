@@ -29,7 +29,7 @@ var extend = function extend(Component, noFetch) {
 			var ret = _get(Object.getPrototypeOf(Export.prototype), 'constructor', this).apply(this, args);
 			if (this.state) {
 				if (checkLocation.isClient()) {
-					this.state = state = unijsGlobalStateCache.states.pop();
+					this.state = unijsGlobalStateCache.states.pop();
 				} else {
 					renderCache.stateComponents.push(this);
 				}
