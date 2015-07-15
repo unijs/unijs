@@ -1,18 +1,18 @@
 'use strict';
 
-var hostFiles = function hostFiles(app, req, res) {
+var hostFiles = function hostFiles(req, res, next) {
 	var match = false;
-	if (req.path.substr(0, 4) === '/.f/') {
-		for (var i = 0, len = app._hostfiles.length; i < len; i++) {
-			if ('/.f/' + app._hostfiles[i]._id + '.' + app._hostfiles[i].type === req.path) {
+	if (req.unijs._path.substr(0, 4) === '/.f/') {
+		for (var i = 0, len = req.unijs.app._hostfiles.length; i < len; i++) {
+			if ('/.f/' + req.unijs.app._hostfiles[i]._id + '.' + req.unijs.app._hostfiles[i].type === req.unijs._path) {
 				match = true;
-				fs.readFile(app._hostfiles[i].path, function (err, data) {
+				fs.readFile(req.unijs.app._hostfiles[i].path, function (err, data) {
 					if (err) {
 						res.writeHead(404);
 						return res.end('File not found.');
 					}
 					var contentType;
-					switch (app._hostfiles[i].type) {
+					switch (req.unijs.app._hostfiles[i].type) {
 						case 'js':
 							contentType = 'application/javascript';
 							break;

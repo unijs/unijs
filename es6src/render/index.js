@@ -1,15 +1,8 @@
 var fs = require('fs');
 var Router = require('react-router');
 
-var render = function(app, options, req, res, next) {
-	if(hostFiles(app, req, res)){
-		return;
-	}
-	if (req.unijs == null) {
-		req.unijs = {};
-	}
-	req.unijs.options = options;
-	req.unijs.app = app;
+var render = function(req, res, next) {
+
 	if (req.unijs.runs == null) {
 		req.unijs.runs = 0;
 	}
@@ -38,7 +31,7 @@ var render = function(app, options, req, res, next) {
 
 	var router = Router.create({
 		routes: req.unijs.config.routes,
-		location: req.url,
+		location: req.unijs._url,
 		onAbort: function defaultAbortHandler(abortReason, location) {
 			var path = router.makePath(abortReason.to, abortReason.params, abortReason.query);
 			res.redirect(301, path)
