@@ -30,7 +30,7 @@ var render = function(req, res, next) {
 	}
 
 	var router = Router.create({
-		routes: req.unijs.config.routes,
+		routes: req.unijs.app.Router,
 		location: req.unijs._url,
 		onAbort: function defaultAbortHandler(abortReason, location) {
 			var path = router.makePath(abortReason.to, abortReason.params, abortReason.query);
