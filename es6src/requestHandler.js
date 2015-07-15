@@ -1,5 +1,6 @@
 var render = require('./render/index.js');
 var uniJsLog = require('./utils/log.js');
+var hostFiles = require('./render/hostfiles.js');
 
 var appStore = require('./appStore.js');
 

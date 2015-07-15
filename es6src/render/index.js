@@ -1,4 +1,4 @@
-var fs = require('fs');
+//var fs = require('fs');
 var Router = require('react-router');
 
 var render = function(req, res, next) {

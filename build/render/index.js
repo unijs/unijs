@@ -1,6 +1,6 @@
+//var fs = require('fs');
 'use strict';
 
-var fs = require('fs');
 var Router = require('react-router');
 
 var render = function render(req, res, next) {
