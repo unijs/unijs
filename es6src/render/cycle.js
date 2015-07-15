@@ -11,19 +11,19 @@ var renderCycleRun = function(req, res, next) {
 	fetchData(req, res, next, function(req, res, next) {
 		renderCycleHelpers.initializeCache(req);
 
-		if (req.unijs.config.debug) {
+		if (req.unijs.options.debug) {
 			req.unijs.debugData.reactStarts.push(Date.now());
 		}
 
 		var html = React.renderToString(req.unijs.appFactoryRendered);
 
-		if (req.unijs.config.debug) {
+		if (req.unijs.options.debug) {
 			req.unijs.debugData.reactStops.push(Date.now());
 		}
 
 		if (renderCache.cacheComplete === false) {
 			transmissionAlgorythm.setNewTransmission();
-			if (req.unijs.config.debug) {
+			if (req.unijs.options.debug) {
 				uniJsLog.debug('Set new Transmissions! Turn: ' + req.unijs.runs);
 			}
 		}
@@ -34,10 +34,10 @@ var renderCycleRun = function(req, res, next) {
 		req.unijs.reactState = stCache;
 		req.unijs.reactHtml = html;
 
-		if (renderCache.cacheComplete === false && req.unijs.runs < req.unijs.config.maxRuns) {
+		if (renderCache.cacheComplete === false && req.unijs.runs < req.unijs.options.maxRuns) {
 			renderCycleRun(req, res, next);
 		} else {
-			if (req.unijs.config.debug) {
+			if (req.unijs.options.debug) {
 				req.unijs.debugData.stop = Date.now();
 				var totalRender = req.unijs.debugData.stop - req.unijs.debugData.start;
 				var sum = 0;
