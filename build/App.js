@@ -55,6 +55,7 @@ var App = (function () {
 			this._head = [];
 			var k = 0;
 			var arr = this.resources.concat(this._resources);
+			var that = this;
 			for (var i in arr) {
 				k++;
 				checkResource(arr[i], function (err, resource) {
@@ -62,13 +63,13 @@ var App = (function () {
 					if (err) {
 						return callback(err);
 					}
-					this._hostfiles.push(resource);
-					this._head.push(this._path + '.f/' + resource._id + '.' + resource.type);
+					that._hostfiles.push(resource);
+					that._head.push(that._path + '.f/' + resource._id + '.' + resource.type);
 					if (k < 1) {
-						this._resources = [];
+						that._resources = [];
 						callback();
 					}
-				}).bind(this);
+				});
 			}
 			if (k < 1) {
 				this._resources = [];
