@@ -41,7 +41,7 @@ var sendApiRequest = function sendApiRequest(req, request, done) {
 		delete request._id;
 	}
 
-	var arr = [].concat(req.unijs.config.forwardHeaders);
+	var arr = [].concat(req.unijs.options.forwardHeaders);
 	if (req.headers['unijs-forward-headers'] != null) {
 		try {
 			var forwardHeaders = JSON.parse(req.headers['unijs-forward-headers']);
