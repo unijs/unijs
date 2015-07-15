@@ -10,7 +10,9 @@ var extend = function(Component, noFetch) {
 			var ret = super(...args);
 			if (this.state) {
 				if (checkLocation.isClient()) {
-					this.state = unijsGlobalStateCache.states.pop();
+					if (unijsGlobalStateCache.states.length > 0) {
+						this.state = unijsGlobalStateCache.states.pop();
+					}
 				} else {
 					renderCache.stateComponents.push(this);
 				}
@@ -18,7 +20,7 @@ var extend = function(Component, noFetch) {
 			return ret;
 		}
 		componentWillMount(...args) {
-         var ret = null;
+			var ret = null;
 			if (super.componentWillMount) {
 				ret = super.componentWillMount(...args);
 			}
