@@ -29,6 +29,7 @@ class App {
 		this._mounted = false;
 		this._hostfiles = [];
 		this._head = [];
+		this._body = [];
 		this._path = "";
 		this._apiUrl = "http://localhost/";
 	}
@@ -78,10 +79,10 @@ class App {
 			head: [
 				'<meta charset="utf-8"></meta>',
 				`<script>var unijsGlobalStateCache = ${JSON.stringify(req.unijs.reactState)};</script>`
-			].concat(this.head).concat(req.unijs.head),
+			].concat(this.head).concat(this._head).concat(req.unijs.head),
 			body: [
 				`<div id="main">${req.unijs.reactHtml}</div>`
-			].concat(this.body).concat(req.unijs.body)
+			].concat(this.body).concat(this._body).concat(req.unijs.body)
 		};
 	}
 
