@@ -72,6 +72,7 @@ checkLocation.on('setServer', function () {
 		}
 
 		for (var i in args) {
+			console.log(i, args[i]);
 			console.log('  #=>'.red.bold, args[i].red.underline);
 		}
 	};

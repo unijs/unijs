@@ -40,6 +40,7 @@ checkLocation.on('setServer', function() {
 	uniJsLog.error = function(text, ...args) {
 		console.log('  uniJs: error  >'.red.bold, text.red.underline);
 		for (var i in args) {
+			console.log(i, args[i])
 			console.log('  #=>'.red.bold, args[i].red.underline);
 		}
 	};
