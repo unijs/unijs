@@ -10,7 +10,7 @@ var extend = function(Component, noFetch) {
 			var ret = super(...args);
 			if (this.state) {
 				if (checkLocation.isClient()) {
-					this.state = state = unijsGlobalStateCache.states.pop();
+					this.state = unijsGlobalStateCache.states.pop();
 				} else {
 					renderCache.stateComponents.push(this);
 				}
