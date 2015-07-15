@@ -6,8 +6,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var hashText = require('./utils/hash.js').text;
 var uniJsLog = require('./utils/log.js');
+var requireNodeJsOnly = require;
 
 var checkResource = function checkResource(path, callback) {
+	var fs = requireNodeJsOnly('fs');
 	fs.exists(path, function (err) {
 		if (err) {
 			uniJsLog.error('Could not load resource from [' + path + ']!', err);
