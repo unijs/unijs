@@ -1,18 +1,23 @@
-# isoJS
-Renders [ReactJS](https://github.com/facebook/react) apps isomorphic on [node.js](https://github.com/joyent/node).
+# uniJS
+uniJS renders [ReactJS](https://github.com/facebook/react) apps universal on the server and the client without changing something in the app.<br>
+![Logo](https://avatars0.githubusercontent.com/u/13003405?v=3&s=200)
 
-isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on the server and the client without changing something in the app.
+
+
+Renders [ReactJS](https://github.com/facebook/react) apps universal on [node.js](https://github.com/joyent/node).
+
+uniJS renders [ReactJS](https://github.com/facebook/react) apps universal on the server and the client without changing something in the app.
 
 ##Demo:
-[Live Demo on Heroku](https://isojs.herokuapp.com/)
+[Live Demo on Heroku](https://unijs.herokuapp.com/)
 
-[Repo of the Demo-App](https://github.com/dustin-H/isojs-demo)
+[Repo of the Demo-App](https://github.com/unijs/unijs-demo)
 
 ###Contribution and Ideas are Welcome! ;-)
 Ideally just create a GitHub Issue to discuss or create a PR.
 
 ##Most important features:
-- **render [React](https://github.com/facebook/react) apps with async api calls isomorphic on node.js**
+- **render [React](https://github.com/facebook/react) apps with async api calls universal on node.js**
 - **free choice of [Flux](https://github.com/facebook/flux) implementation (or just [React](https://github.com/facebook/react))**
 - **no need to define data fetching on serverside**
 - **sync state from server rendered app to client**
@@ -29,24 +34,24 @@ Ideally just create a GitHub Issue to discuss or create a PR.
 - You build a [React](https://github.com/facebook/react) app
 - You load your data via [superagent](https://github.com/visionmedia/superagent)
 - You build a REST API-Server for your data loading (no need to be node.js)
-- You create an isoJS-Server which handles all front-facing requests
+- You create an uniJS-Server which handles all front-facing requests
 
 ##Get Started:
 
-To get startet just fork the [isojs-demo-app](https://github.com/dustin-H/isojs-demo).
+To get startet just fork the [uniJS-demo-app](https://github.com/dustin-H/uniJS-demo).
 
 ##Usage
 
 ###Installation:
 
-`npm install isojs`
+`npm install uniJS`
 
 ###Server:
 
 On the server-side you only need to define where your routes component is and on which url your data API can be reached.
 
 ```js
-var isojs = require('isojs');
+var uniJS = require('uniJS');
 
 var config = {
 	routesPath: './Routes.js',
@@ -56,12 +61,12 @@ var config = {
 };
 ```
 
-With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!). To ensure, that the server-side part of isojs is available, call `setServer()`.
+With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!). To ensure, that the server-side part of uniJS is available, call `setServer()`.
 
 ```js
-isojs.checkLocation.setServer();
-var isoJSapp = isojs.appBuilder(config);
-app.use(isoJSapp());
+uniJS.checkLocation.setServer();
+var uniJSapp = uniJS.appBuilder(config);
+app.use(uniJSapp());
 ```
 
 ###Client:
@@ -71,19 +76,19 @@ A basic component that loads data and holds state looks like that:
 ```js
 var React = require('react');
 var superagent = require('superagent');
-var isojs = require('isojs');
+var uniJS = require('uniJS');
 
 var Blog = React.createClass({
-	mixins: [isojs.loadMixin, isojs.stateMixin],
+	mixins: [uniJS.loadMixin, uniJS.stateMixin],
 
-	isojsInitialState: function(){
+	uniJSInitialState: function(){
 		return { title: '', content: '' };
 	},
 
 	loadBlogPost: function(id){
 		superagent
 		.get('/blog/getpost/'+id)
-		.use(isojs.superagentPlugin)
+		.use(uniJS.superagentPlugin)
 		.end(function(err, res){
 			this.setState(JSON.parse(res.text));
 		}.bind(this));
@@ -123,10 +128,10 @@ module.exports = routes;
 ```
 
 ##What changed compared to a default ReactJS app?
-- Use the `isojs.loadMixin` mixin in all data loading components
-- Use the `isojs.stateMixin` mixin in all components using state
+- Use the `uniJS.loadMixin` mixin in all data loading components
+- Use the `uniJS.stateMixin` mixin in all components using state
 - Use [superagent](https://github.com/visionmedia/superagent) to load your data
-- Use the `isojs.superagentPlugin` plugin to enable isomorphic rendering of this request
+- Use the `uniJS.superagentPlugin` plugin to enable universal rendering of this request
 
 ##Performance Note:
 To be able to render your app as fast as possible try to map your route params to your api calls. Do not convert them in any way.
