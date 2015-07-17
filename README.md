@@ -1,104 +1,130 @@
-# uniJS
-uniJS renders [ReactJS](https://github.com/facebook/react) apps universal on the server and the client without changing something in the app.<br>
-![Logo](https://avatars0.githubusercontent.com/u/13003405?v=3&s=200)
+
+# <img src="https://avatars0.githubusercontent.com/u/13003405?v=3&s=100" height="50" style="position: relative; top: -5px;" alt=""> uniJS
+
+uniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
+
+* **Universal:** Use the same code base for server- and client-rendering. Also there is no force to use flux.
+* **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. uniJS automatically detects which data is neccessary for rendering and fetches it before render.
+* **State Sync:** Sync's the server rendered state to the client. After rendering the app uniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
+
+<br>
+> *uniJS requires to use [react-router](https://github.com/rackt/react-router).*
 
 
+##Demo
+* **Live:** [uniJS on Heroku](https://unijs.herokuapp.com/)<br>
+ (it's free account so it may takes some time when the app sleeps)
+* **Repo:** [unijs/unijs-demo](https://github.com/unijs/unijs-demo)
 
-Renders [ReactJS](https://github.com/facebook/react) apps universal on [node.js](https://github.com/joyent/node).
-
-uniJS renders [ReactJS](https://github.com/facebook/react) apps universal on the server and the client without changing something in the app.
-
-##Demo:
-[Live Demo on Heroku](https://unijs.herokuapp.com/)
-
-[Repo of the Demo-App](https://github.com/unijs/unijs-demo)
-
-###Contribution and Ideas are Welcome! ;-)
-Ideally just create a GitHub Issue to discuss or create a PR.
-
-##Most important features:
-- **render [React](https://github.com/facebook/react) apps with async api calls universal on node.js**
-- **free choice of [Flux](https://github.com/facebook/flux) implementation (or just [React](https://github.com/facebook/react))**
-- **no need to define data fetching on serverside**
-- **sync state from server rendered app to client**
-
-###What it does:
-- guesses which data needs to get fetched on the server based on the [react-router](https://github.com/rackt/react-router) route and previous requests
-- fetches all data at the same time
-- renders the [React](https://github.com/facebook/react) app and synchronous respond to [superagent](https://github.com/visionmedia/superagent) requests with the data fetched before
-- sends the rendered app including the latest state of each component back to the client
-- runs your [React](https://github.com/facebook/react) app on the client (if javascript is enabled)
-
-
-###How looks a classic architecture?
-- You build a [React](https://github.com/facebook/react) app
-- You load your data via [superagent](https://github.com/visionmedia/superagent)
-- You build a REST API-Server for your data loading (no need to be node.js)
-- You create an uniJS-Server which handles all front-facing requests
-
-##Get Started:
-
-To get startet just fork the [uniJS-demo-app](https://github.com/dustin-H/uniJS-demo).
 
 ##Usage
 
 ###Installation:
 
-`npm install uniJS`
+`npm install unijs`
 
 ###Server:
 
-On the server-side you only need to define where your routes component is and on which url your data API can be reached.
+On server-side you need to define your react-router Routes by setting the Router. Also you need to specify the URL of your REST-API Server.
 
 ```js
-var uniJS = require('uniJS');
+var Router = require('client/js/Routes.js')
+var unijs = require('unijs');
+var Server = unijs.Server();
 
-var config = {
-	routesPath: './Routes.js',
-	getApiServerAddress: function(){
-		return 'http://localhost:8080/';
-	}
-};
+var unijsApp = new Server.App('myDemoApp');
+
+unijsApp.Router = Router;
+unijsApp.resources.push(__dirname+'/bundle.js');
+unijsApp.setApiUrl('http://localhost:5000/');
+
+Server.mount('/', unijsApp);
 ```
 
-With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!). To ensure, that the server-side part of uniJS is available, call `setServer()`.
+####uniJS-builder
+uniJS-builder simplifies the usage of uniJS. By defining the path of your Routes file it compiles with babel, browserify and uglify. Then it adds the bundle to the resources.
 
 ```js
-uniJS.checkLocation.setServer();
-var uniJSapp = uniJS.appBuilder(config);
-app.use(uniJSapp());
+var unijs = require('unijs');
+var Server = unijs.Server();
+var App = unijsBuilder.extend(Server.App);
+
+var unijsApp = new App('myDemoApp');
+
+unijsApp.routesPath = 'client/js/Routes.js';
+unijsApp.setApiUrl('http://localhost:5000/');
+
+Server.mount('/', unijsApp);
 ```
 
 ###Client:
+
+On client you need to extend each component that has state or is loading data with AJAX.
+
+```js
+class Blog extends React.Component{
+	// component methods
+}
+
+Blog = unijs.extend(Blog);
+```
+
+And load your data with superagent plus unijs-plugin in the componentDidMount method. (componentDidMount gets called while server-rendering when componentWillMount gets called)
+
+```js
+class Blog extends React.Component{
+	componentDidMount(){
+		superagent.get('/getdata')
+			.use(unijs.superagentPlugin)
+			.end(function(err, res) {
+				this.setState(JSON.parse(res.text));
+			}.bind(this)
+		);
+	}
+}
+```
+
+Define your initial state as you do it in React ES6:
+
+```js
+class Blog extends React.Component{
+	componentDidMount(){
+		superagent.get('/getdata')
+			.use(unijs.superagentPlugin)
+			.end(function(err, res) {
+				this.setState(JSON.parse(res.text));
+			}.bind(this)
+		);
+	}
+}
+```
 
 A basic component that loads data and holds state looks like that:
 
 ```js
 var React = require('react');
 var superagent = require('superagent');
-var uniJS = require('uniJS');
+var unijs = require('unijs');
 
-var Blog = React.createClass({
-	mixins: [uniJS.loadMixin, uniJS.stateMixin],
-
-	uniJSInitialState: function(){
-		return { title: '', content: '' };
-	},
-
-	loadBlogPost: function(id){
-		superagent
-		.get('/blog/getpost/'+id)
-		.use(uniJS.superagentPlugin)
-		.end(function(err, res){
-			this.setState(JSON.parse(res.text));
-		}.bind(this));
-	},
-
-	componentDidMount: function(){
-		this.loadBlogPost(this.props.id);
-	},
-
-	render: function() {
+class Blog extends React.Component {
+	constructor() {
+		super();
+		this.state = {title: '', content: ''};
+	}
+	componentDidMount() {
+		superagent.get('/blog/getpost/' + this.props.id)
+			.use(unijs.superagentPlugin)
+			.end(function(err, res) {
+				this.setState(JSON.parse(res.text));
+			}.bind(this)
+		);
+	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.id != this.props.id) {
+			this.loadBlogPost(nextProps.id);
+		}
+	}
+	render() {
 		return (
 			<div>
 				<h1>{this.state.title}</h1>
@@ -106,8 +132,10 @@ var Blog = React.createClass({
 			</div>
 		);
 	}
-});
+}
+Blog = unijs.extend(Blog);
 
+module.exports = Blog;
 ```
 
 The `Routes.js` file defines all routes of your app with react-router.
@@ -126,6 +154,9 @@ var routes = (
 
 module.exports = routes;
 ```
+
+###Contribution and Ideas are Welcome! ;-)
+Ideally just create a GitHub Issue to discuss or create a PR.
 
 ##What changed compared to a default ReactJS app?
 - Use the `uniJS.loadMixin` mixin in all data loading components
