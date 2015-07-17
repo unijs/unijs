@@ -12,7 +12,10 @@ var mount = function(path, app, callback) {
 		len;
 	for (i = 0, len = appStore.length; i < len; i++) {
 		if (appStore[i]._path === path) {
-			return callback("Path already registered!");
+			if (callback && typeof callback === 'function') {
+				callback("Path already registered!");
+			}
+			return;
 		}
 		if (appStore[i]._path.split('/').length <= pathlength) {
 			break;
@@ -26,6 +29,9 @@ var mount = function(path, app, callback) {
 		}
 		uniJsLog.log('APP Mounted!');
 		app._mounted = true;
+		if (callback && typeof callback === 'function') {
+			callback();
+		}
 	});
 }
 
