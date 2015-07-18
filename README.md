@@ -19,11 +19,11 @@ uniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 
 ##Usage
 
-###Installation:
+###Installation
 
 `npm install unijs`
 
-###Server:
+###Server
 
 On server-side you need to define your react-router Routes by setting the Router. Also you need to specify the URL of your REST-API Server.
 
@@ -57,7 +57,7 @@ unijsApp.setApiUrl('http://localhost:5000/');
 Server.mount('/', unijsApp);
 ```
 
-###Client:
+###Client
 
 On client you need to extend each component that has state or is loading data with AJAX.
 
@@ -88,18 +88,14 @@ Define your initial state as you do it in React ES6:
 
 ```js
 class Blog extends React.Component{
-	componentDidMount(){
-		superagent.get('/getdata')
-			.use(unijs.superagentPlugin)
-			.end(function(err, res) {
-				this.setState(JSON.parse(res.text));
-			}.bind(this)
-		);
+	constructor(){
+		super();
+		this.state = {title: '', content: ''};
 	}
 }
 ```
 
-A basic component that loads data and holds state looks like that:
+Now put it all together with some ReactJS basics...
 
 ```js
 var React = require('react');
@@ -138,36 +134,13 @@ Blog = unijs.extend(Blog);
 module.exports = Blog;
 ```
 
-The `Routes.js` file defines all routes of your app with react-router.
-
-```js
-var React = require('react');
-var Route = require('react-router').Route;
-
-var BlogPost = require('./components/BlogPost.react');
-
-var routes = (
-	<Route name="main" path="/">
-		<Route path="/blogpost/:id" name="blogpost" handler={BlogPost}/>
-	</Route>
-);
-
-module.exports = routes;
-```
-
 ###Contribution and Ideas are Welcome! ;-)
-Ideally just create a GitHub Issue to discuss or create a PR.
+Ideally just create a GitHub Issue or may even a PullRequest to discuss.
 
-##What changed compared to a default ReactJS app?
-- Use the `uniJS.loadMixin` mixin in all data loading components
-- Use the `uniJS.stateMixin` mixin in all components using state
-- Use [superagent](https://github.com/visionmedia/superagent) to load your data
-- Use the `uniJS.superagentPlugin` plugin to enable universal rendering of this request
-
-##Performance Note:
+##Performance Note
 To be able to render your app as fast as possible try to map your route params to your api calls. Do not convert them in any way.
 
-###Do:
+###Do
 `:id` and `:time` are placeholders for some kind of id and a timestamp
 
 React-Router URL | API Calls
@@ -177,13 +150,9 @@ React-Router URL | API Calls
 /blog/:id | /loadpost?id=:id
 /blog/:id?time=:time | /loadpost?id=id&time=:time
 
-###Do NOT !!!!:
+###Do NOT
 React-Router URL | API Calls
  --- | ---
-/blog/:id/:time | /loadpost/:id/[:time/2]
+/blog/:id/:timeInMillis | /loadpost/:id/:timeInUTC
 
-`[:time/2]` intents to describe the calculated half of `:time`
-
-
-
-[Apache License Version 2.0](LICENSE)
+[MIT](LICENSE)
