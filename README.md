@@ -25,20 +25,34 @@ uniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 
 ###Server
 
-On server-side you need to define your react-router Routes by setting the Router. Also you need to specify the URL of your REST-API Server.
+On server-side you need to define your react-router Routes by setting the Router. Also you need to specify the URL of your REST-API Server. With the resources attribute array you can add `js` and `css` files.
 
 ```js
-var Router = require('client/js/Routes.js')
 var unijs = require('unijs');
 var Server = unijs.Server();
+var Router = require('client/js/Routes.js');
 
-var unijsApp = new Server.App('myDemoApp');
+var myApp = new Server.App('myApp');
 
-unijsApp.Router = Router;
-unijsApp.resources.push(__dirname+'/bundle.js');
-unijsApp.setApiUrl('http://localhost:5000/');
+myApp.Router = Router;
+myApp.resources.push(__dirname+'/bundle.js');
+myApp.setApiUrl('http://localhost:5000/');
 
-Server.mount('/', unijsApp);
+Server.mount('/', myApp);
+```
+
+####Main client render file for bundle
+>Your React App in the bundle file needs to render to `#main` div container.
+
+```js
+var React = require('react');
+var Router = require('react-router');
+var routes = require('/path/to/Routes.js');
+window.onload = function() {
+	Router.run(routes, Router.HistoryLocation, function(Handler) {
+		React.render(<Handler/>, document.getElementById('main'));
+	});
+};
 ```
 
 ####uniJS-builder
