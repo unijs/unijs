@@ -1,18 +1,18 @@
 
-# <img src="https://avatars0.githubusercontent.com/u/13003405?v=3&s=100" height="50" style="position: relative; top: -5px;" alt=""> uniJS
+# <img src="https://avatars0.githubusercontent.com/u/13003405?v=3&s=100" height="50" style="position: relative; top: -5px;" alt=""> UniJS
 
-uniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
+UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
 
 * **Universal:** Use the same code base for server- and client-rendering. Also there is no force to use flux.
-* **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. uniJS automatically detects which data is neccessary for rendering and fetches it before render.
-* **State Sync:** Sync's the server rendered state to the client. After rendering the app uniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
+* **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. UniJS automatically detects which data is neccessary for rendering and fetches it before render.
+* **State Sync:** Sync's the server rendered state to the client. After rendering the app UniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
 
 <br>
-> *uniJS requires to use [react-router](https://github.com/rackt/react-router).*
+> *UniJS requires to use [react-router](https://github.com/rackt/react-router).*
 
 
 ##Demo
-* **Live:** [uniJS on Heroku](https://unijs.herokuapp.com/)<br>
+* **Live:** [UniJS on Heroku](https://unijs.herokuapp.com/)<br>
  (it's free account so it may takes some time when the app sleeps)
 * **Repo:** [unijs/unijs-demo](https://github.com/unijs/unijs-demo)
 
@@ -55,8 +55,8 @@ window.onload = function() {
 };
 ```
 
-####uniJS-builder
-uniJS-builder simplifies the usage of uniJS. By defining the path of your Routes file it compiles with babel, browserify and uglify. Then it adds the bundle to the resources.
+####UniJS-builder
+UniJS-builder simplifies the usage of UniJS. By defining the path of your Routes file it compiles with babel, browserify and uglifyify. Then it adds the bundle to the resources.
 
 ```js
 var unijs = require('unijs');
