@@ -23,7 +23,7 @@ var mount = function(path, app, callback) {
 	}
 	app._path = path;
 	appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
-	app.mount(function(err) {
+	app._mount(function(err) {
 		if (err != null) {
 			return uniJsLog.error(`Could not mount app at [${path}]!`, err);
 		}
@@ -53,5 +53,6 @@ var unmount = function(path) {
 
 
 module.exports = {
-	mount: mount
+	mount: mount,
+	unmount: unmount
 }
