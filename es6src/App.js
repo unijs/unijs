@@ -24,6 +24,7 @@ class App {
 		this.body = [];
 		this.resources = resources;
 		this.Router = null;
+		this.charset = 'utf-8';
 		this._resources = [];
 		this._name = name;
 		this._mounted = false;
@@ -31,14 +32,25 @@ class App {
 		this._head = [];
 		this._body = [];
 		this._path = "";
-		this._apiUrl = "http://localhost/";
 	}
 
-	setApiUrl(apiUrl) {
-		this._apiUrl = apiUrl;
+	getApiUrl(req, res, next) {
+		var protocol = 'http';
+		var host = 'localhost';
+		var path = '/';
+		if (req.protocol != null && typeof req.protocol === 'string' && (req.protocol === 'http' || req.protocol === 'https')) {
+			protocol = req.protocol;
+		}
+		if (req.headers != null && req.headers.host != null && typeof req.headers.host === 'string' && req.headers.host !== '') {
+			host = req.headers.host;
+		}
+		if (req.path != null && typeof req.path === 'string' && req.path !== '') {
+			path = req.path;
+		}
+		return protocol + '://' + host + path;
 	}
 
-	mount(callback) {
+	_mount(callback) {
 		this._hostfiles = [];
 		this._head = [];
 		var k = 0;
@@ -74,10 +86,10 @@ class App {
 		}
 	}
 
-	render(req, res, next) {
+	_render(req, res, next) {
 		return {
 			head: [
-				'<meta charset="utf-8"></meta>',
+				`<meta charset="${this.charset}"></meta>`,
 				`<script>var unijsGlobalStateCache = ${JSON.stringify(req.unijs.reactState)};</script>`
 			].concat(this.head).concat(this._head).concat(req.unijs.head),
 			body: [
@@ -86,8 +98,8 @@ class App {
 		};
 	}
 
-	respond(req, res, next) {
-		var render = req.unijs.app.render(req, res, next);
+	_respond(req, res, next) {
+		var render = req.unijs.app._render(req, res, next);
 		var html = `
 	   <html>
 	      <head>
