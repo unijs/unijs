@@ -35,7 +35,7 @@ var mount = function(path, app, callback) {
 	});
 }
 
-var unmount = function(path) {
+var unmount = function(path, callback) {
 	if (typeof path !== 'string') {
 		path = path._path;
 	}
@@ -49,6 +49,8 @@ var unmount = function(path) {
 	var app = arr.splice(i, 1);
 	app._mounted = false;
 	app._path = "";
+	var callback = callback || function() {}
+	app._unmount(callback);
 }
 
 

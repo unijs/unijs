@@ -87,6 +87,10 @@ class App {
 		}
 	}
 
+	_unmount(callback){
+		callback();
+	}
+
 	_render(req, res, next) {
 		return {
 			head: [

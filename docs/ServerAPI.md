@@ -22,5 +22,5 @@ var Server = unijs.Server();
 
 ### [App](AppClass.md)
 ### [getMiddleware](getMiddleware.md)
-### [mount](mount.md)
-### [unmount](getRequestHandler.md)
+### [mount](mount.md#mount)
+### [unmount](mount.md#unmount)
