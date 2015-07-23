@@ -7,12 +7,12 @@ UniJS provides a function called `unijs.Server()`. This returns always the same 
 ## Server Object
 The mentioned object has the following props:
 
-Name              | Type
-:---------------- | :------------------
-App               | ES6/Prototype class
-getRequestHandler | function
-mount             | function
-unmount           | function
+Name          | Type
+:------------ | :------------------
+App           | ES6/Prototype class
+getMiddleware | function
+mount         | function
+unmount       | function
 
 For further easier use lets create a new variable.
 
@@ -21,9 +21,6 @@ var Server = unijs.Server();
 ```
 
 ### [App](AppClass.md)
-
-### [getRequestHandler](getRequestHandler.md)
-
+### [getMiddleware](getMiddleware.md)
 ### [mount](mount.md)
-
 ### [unmount](getRequestHandler.md)
