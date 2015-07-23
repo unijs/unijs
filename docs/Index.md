@@ -9,6 +9,6 @@ You can find the documentations here:
 * [Server API](ServerAPI.md)
 * [Client API](ClientAPI.md)
 
-## How it works
+## [How it works](HowItWorks.md)
 
-//Todo
+## [Performance](Performance.md)
