@@ -39,3 +39,6 @@ Returns true or false. What it does should be clear.
 
 ### `unijs.checkLocation.isServer()`
 Returns true or false. What it does should be clear.
+
+## Render
+Render has for the moment just one property named `cache`. This includes several render information from UniJS which can be useful to create plugins. Read more at [Plugins](Plugins.md)
