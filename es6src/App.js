@@ -1,5 +1,6 @@
 var hashText = require('./utils/hash.js').text;
 var uniJsLog = require('./utils/log.js');
+var cache = require('./render/cache.js');
 var requireNodeJsOnly = require;
 
 var checkResource = function(path, callback) {
@@ -90,6 +91,7 @@ class App {
 		return {
 			head: [
 				`<meta charset="${this.charset}"></meta>`,
+				`<style>${cache.css}</style>`,
 				`<script>var unijsGlobalStateCache = ${JSON.stringify(req.unijs.reactState)};</script>`
 			].concat(this.head).concat(this._head).concat(req.unijs.head),
 			body: [

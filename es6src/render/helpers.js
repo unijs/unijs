@@ -1,4 +1,3 @@
-
 var renderCache = require('./cache.js');
 
 var initializeCache = function(req, res, next) {
@@ -9,6 +8,7 @@ var initializeCache = function(req, res, next) {
 	renderCache.req = req;
 	renderCache.stateComponents = [];
 	renderCache.external = {};
+	renderCache.css = '';
 	renderCache.cacheComplete = true;
 };
 
