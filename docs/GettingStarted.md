@@ -1,5 +1,5 @@
 # Getting Started - NOT FINISHED - DON'T USE!!!
-For this Getting Started Guide we will use [UniJS](unijs/unijs), [UniJS-builder](unijs/unijs-builder) and [react-router](rackt/react-router).
+For this Getting Started Guide we will use [UniJS](/unijs/unijs), [UniJS-builder](/unijs/unijs-builder) and [react-router](/rackt/react-router).
 
 ## 1. Let's create a simple React App
 
