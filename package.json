@@ -1,7 +1,7 @@
 {
   "name": "unijs",
   "version": "0.0.23",
-  "description": "Renders reactJS apps universal on node.js without big app changes.",
+  "description": "Renders reactJS apps universal on node.js without defining server fetchings.",
   "main": "index.js",
   "files": [
     "index.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/unijs/isojs.git"
+    "url": "https://github.com/unijs/unijs.git"
   },
   "keywords": [
     "react",
@@ -38,7 +38,7 @@
   "bugs": {
     "url": "https://github.com/dustin-H/unijs/issues"
   },
-  "homepage": "https://github.com/unijs/isojs",
+  "homepage": "https://github.com/unijs/unijs",
   "dependencies": {
     "colors": "^1.1.2",
     "react": "0.13.2",
