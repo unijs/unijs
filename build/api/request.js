@@ -6,7 +6,7 @@ var uniJsLog = require('../utils/log.js');
 var url = require('url');
 
 var sendApiRequest = function sendApiRequest(req, request, done) {
-	var reqUrl = url.resolve(req.unijs.app._apiUrl, request.url);
+	var reqUrl = url.resolve(req.unijs.app.getApiUrl(req, req.res, req.next), request.url);
 	var pendingRequest = superagent;
 	switch (request.method.toUpperCase()) {
 		case 'GET':
