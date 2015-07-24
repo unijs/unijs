@@ -1,6 +1,6 @@
 {
   "name": "unijs",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Renders reactJS apps universal on node.js without defining server fetchings.",
   "main": "index.js",
   "files": [
@@ -36,7 +36,7 @@
   "author": "Dustin Hoffner",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dustin-H/unijs/issues"
+    "url": "https://github.com/unijs/unijs/issues"
   },
   "homepage": "https://github.com/unijs/unijs",
   "dependencies": {
