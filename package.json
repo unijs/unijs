@@ -1,6 +1,6 @@
 {
   "name": "unijs",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Renders reactJS apps universal on node.js without big app changes.",
   "main": "index.js",
   "files": [
