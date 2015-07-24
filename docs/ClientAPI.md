@@ -31,6 +31,34 @@ class MyComponent extends React.Component{
 MyComponent = unijs.extend(MyComponent);
 ```
 
+**What does this thing?**
+Normally you do your AJAX-Calls in the `componentDidMount` method. However, due to the fact that the component will not be mounted on the server, because there is no DOM, UniJS will catch `componentWillMount` and call `componentDidMount` in your component. When this is a problem for you (which is possible) you can define `unijsFetchData` instead. This will be called on componentWillMount on the server, but not on the client. So you will need to call this method in your `componentDidMount` if you want to fetch the data also on the client.
+
+Another way to stop UniJS from calling `componentDidMount` is to define noFetch in the extend function:
+
+```js
+MyComponent = unijs.extend(MyComponent, true);
+```
+
+* **NOTE:** If you fetch data from either `componentDidMount` or `unijsFetchData` this call needs to be in sync. So it should't be something like this:
+
+```js
+// THIS WILL NOT WORK!
+
+componentDidMount(){
+   setTimeout(function(){
+      superagent.get('/blog/getpostlist')
+         .accept('application/json')
+         .use(unijs.superagentPlugin)
+         .end(function(err, res) {
+            /* do something */
+         });
+   }, 123)
+}
+
+// THIS WILL NOT WORK!
+```
+
 ## Check Location
 With this feature you can detect wether the running render process runs on browser or on server. There are different functions available:
 
