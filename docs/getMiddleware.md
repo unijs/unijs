@@ -1,7 +1,7 @@
-# `getMiddleware(options)`
+# `getMiddleware( [options] )`
 This function gets used once in your application to get the UniJS Middleware.
 
-You pass an options object which can contain the following keys:
+You pass can an options object which can contain the following keys:
 
 Name    | Type
 :------ | :------
@@ -15,7 +15,7 @@ MaxRuns defines how often UniJS is allowed to run `React.renderToString()` per r
 ## `middleware(req, res, next)`
 Middleware is a function which has 3 parameters. These are the same parameters that are used in [ExpressJS](https://github.com/strongloop/express) middleware.
 
-If you are using express you can just use it.
+If you are using express you can just `use` it.
 
 **Example:**
 ```js

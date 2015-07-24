@@ -1,5 +1,5 @@
 # App Class
-This is a ES6/Prototype class you can create an instance of with
+With this ES6/Prototype class you can create a new app which can be mounted to your Server. The Server can mount multiple apps.
 
 ```js
 var myApp = new Server.App('myApp');
@@ -8,7 +8,7 @@ var myApp = new Server.App('myApp');
 The instance `myApp` has this methods and attributes:
 
 ### `constructor(name [, resources = []  ])`
-You have to pass a (in your project scope) uniq app name and can optionally define resources. More info about resources below.
+You have to pass a (in your project scope) unique app name and can optionally define resources. More info about resources below.
 
 ### `Router = null`
 Expects to be set to an [react-router](https://github.com/rackt/react-router) routes object.

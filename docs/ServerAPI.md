@@ -1,8 +1,8 @@
 # Server API
 > The lowercase `unijs` always means this: <br> `var unijs = require('unijs')`
 
-UniJS provides a function called `unijs.Server()`. This returns always the same object.
-- **Why is this a function and not just an object?** <br>Because UniJS needs to know weather it is running/rendering in NodeJS or in the browser.
+UniJS provides a function called `unijs.Server()`. This returns always the same Server object.
+- **Why is this a function and not just an object?** <br>Because UniJS needs to know wether it is running/rendering in NodeJS or in the browser.
 
 ## Server Object
 The mentioned object has the following props:
@@ -22,5 +22,5 @@ var Server = unijs.Server();
 
 ### [App](AppClass.md)
 ### [getMiddleware](getMiddleware.md)
-### [mount](mount.md#mount)
-### [unmount](mount.md#unmount)
+### [mount](mount.md#app-lifecycle)
+### [unmount](mount.md#unmountidentifyer-callback)

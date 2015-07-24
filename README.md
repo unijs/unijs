@@ -6,7 +6,7 @@ UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 * **Universal:** Use the same code base for server- and client-rendering. Also there is no force to use flux.
 * **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. UniJS automatically detects which data is neccessary for rendering and fetches it before render.
 * **State Sync:** Sync's the server rendered state to the client. After rendering the app UniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
-* **EcmaScript 6:** Build your apps in ES6 style. 
+* **EcmaScript 6:** Build your apps in ES6 style.
 
 <br>
 > *UniJS requires to use [react-router](https://github.com/rackt/react-router).*
@@ -71,8 +71,8 @@ window.onload = function() {
 };
 ```
 
-####UniJS-builder
-UniJS-builder simplifies the usage of UniJS. By defining the path of your Routes file it compiles with babel, browserify and uglifyify. Then it adds the bundle to the resources.
+####UniJS-Builder
+UniJS-Builder simplifies the usage of UniJS. By defining the path of your Routes file it compiles with babel, browserify and uglifyify. Then it adds the bundle to the resources.
 
 ```js
 var unijs = require('unijs');
@@ -131,9 +131,9 @@ class Blog extends React.Component{
 Now put it all together with some ReactJS basics...
 
 ```js
-var React = require('react');
-var superagent = require('superagent');
-var unijs = require('unijs');
+import React from 'react';
+import superagent from'superagent';
+import unijs from 'unijs';
 
 class Blog extends React.Component {
 	constructor() {
@@ -164,10 +164,14 @@ class Blog extends React.Component {
 }
 Blog = unijs.extend(Blog);
 
-module.exports = Blog;
+export default Blog;
 ```
 
-###Contribution and Ideas are Welcome! ;-)
+## Roadmap
+- [ ] Load component's code just when it is needed. Maybe with webpack or something own.
+- [ ] Improve Transmission Algorithm.
+
+## Contribution and Ideas are Welcome! ;-)
 Ideally just create a GitHub Issue or may even a PullRequest to discuss.
 
 [MIT](LICENSE)
