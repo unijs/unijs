@@ -1,7 +1,7 @@
 var requireNodeJsOnly = require;
 
 var checkLocation = require('./build/utils/checkLocation.js');
-var cache = require('./render/cache.js');
+var cache = require('./build/render/cache.js');
 
 var m = {};
 
