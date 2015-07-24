@@ -6,6 +6,7 @@ UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 * **Universal:** Use the same code base for server- and client-rendering. Also there is no force to use flux.
 * **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. UniJS automatically detects which data is neccessary for rendering and fetches it before render.
 * **State Sync:** Sync's the server rendered state to the client. After rendering the app UniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
+* **EcmaScript 6:** Build your apps in ES6 style. 
 
 <br>
 > *UniJS requires to use [react-router](https://github.com/rackt/react-router).*
@@ -31,22 +32,27 @@ npm start
 
 ###Installation
 
-`npm install unijs`
+```sh
+npm install unijs
+```
 
 ###Server
 
-On server-side you need to define your react-router Routes by setting the Router. Also you need to specify the URL of your REST-API Server. With the resources attribute array you can add `js` and `css` files.
+On server-side you need to define your react-router Routes by setting the Router. With the resources attribute array you can add `js` and `css` files.
 
 ```js
 var unijs = require('unijs');
-var Server = unijs.Server();
 var Router = require('client/js/Routes.js');
+
+app.use(Server.getMiddleware());
+// Here express is used. You can also use something similar, that passes (req, res, next) to the returned function on each request.
+
+var Server = unijs.Server();
 
 var myApp = new Server.App('myApp');
 
 myApp.Router = Router;
 myApp.resources.push(__dirname+'/bundle.js');
-myApp.setApiUrl('http://localhost:5000/');
 
 Server.mount('/', myApp);
 ```
@@ -70,13 +76,16 @@ UniJS-builder simplifies the usage of UniJS. By defining the path of your Routes
 
 ```js
 var unijs = require('unijs');
-var Server = unijs.Server();
 var App = unijsBuilder.extend(Server.App);
+
+var Server = unijs.Server();
+
+app.use(Server.getMiddleware());
+// Here express is used. You can also use something similar, that passes (req, res, next) to the returned function on each request.
 
 var unijsApp = new App('myDemoApp');
 
 unijsApp.routesPath = 'client/js/Routes.js';
-unijsApp.setApiUrl('http://localhost:5000/');
 
 Server.mount('/', unijsApp);
 ```
