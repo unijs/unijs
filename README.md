@@ -20,7 +20,7 @@ UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 
 ##Quick Start
 
-> Not working yet! Still working on Demo!
+> Not working yet! Still working on the Demo!
 
 ```sh
 git clone https://github.com/unijs/demo.git
