@@ -55,7 +55,7 @@ var renderCycleRun = function renderCycleRun(req, res, next) {
 				}
 				uniJsLog.debug('Server-side rendered: Turns: ' + req.unijs.runs + ' Middle React-Rendertime: ' + reactRenderTime + ' Total Rendertime: ' + totalRender);
 			}
-			req.unijs.app.respond(req, res, next);
+			req.unijs.app._respond(req, res, next);
 		}
 	});
 };

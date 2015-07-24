@@ -6,7 +6,7 @@ var hostFiles = require('./render/hostfiles.js');
 
 var appStore = require('./appStore.js');
 
-var requestHandler = function requestHandler(options) {
+var getMiddleware = function getMiddleware(options) {
 	return function (req, res, next) {
 		for (var i = 0, len = appStore.length; i < len; i++) {
 			if (req.url.substr(0, appStore[i]._path.length) === appStore[i]._path) {
@@ -38,4 +38,4 @@ var requestHandler = function requestHandler(options) {
 	};
 };
 
-module.exports = requestHandler;
+module.exports = getMiddleware;

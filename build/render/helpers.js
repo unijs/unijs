@@ -10,6 +10,7 @@ var initializeCache = function initializeCache(req, res, next) {
 	renderCache.req = req;
 	renderCache.stateComponents = [];
 	renderCache.external = {};
+	renderCache.css = '';
 	renderCache.cacheComplete = true;
 };
 

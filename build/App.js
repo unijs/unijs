@@ -6,6 +6,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var hashText = require('./utils/hash.js').text;
 var uniJsLog = require('./utils/log.js');
+var cache = require('./render/cache.js');
 var requireNodeJsOnly = require;
 
 var checkResource = function checkResource(path, callback) {
@@ -34,6 +35,7 @@ var App = (function () {
 		this.body = [];
 		this.resources = resources;
 		this.Router = null;
+		this.charset = 'utf-8';
 		this._resources = [];
 		this._name = name;
 		this._mounted = false;
@@ -41,17 +43,28 @@ var App = (function () {
 		this._head = [];
 		this._body = [];
 		this._path = '';
-		this._apiUrl = 'http://localhost/';
 	}
 
 	_createClass(App, [{
-		key: 'setApiUrl',
-		value: function setApiUrl(apiUrl) {
-			this._apiUrl = apiUrl;
+		key: 'getApiUrl',
+		value: function getApiUrl(req, res, next) {
+			var protocol = 'http';
+			var host = 'localhost';
+			var path = '/';
+			if (req.protocol != null && typeof req.protocol === 'string' && (req.protocol === 'http' || req.protocol === 'https')) {
+				protocol = req.protocol;
+			}
+			if (req.headers != null && req.headers.host != null && typeof req.headers.host === 'string' && req.headers.host !== '') {
+				host = req.headers.host;
+			}
+			if (req.path != null && typeof req.path === 'string' && req.path !== '') {
+				path = req.path;
+			}
+			return protocol + '://' + host + path;
 		}
 	}, {
-		key: 'mount',
-		value: function mount(callback) {
+		key: '_mount',
+		value: function _mount(callback) {
 			this._hostfiles = [];
 			this._head = [];
 			var k = 0;
@@ -87,17 +100,22 @@ var App = (function () {
 			}
 		}
 	}, {
-		key: 'render',
-		value: function render(req, res, next) {
+		key: '_unmount',
+		value: function _unmount(callback) {
+			callback();
+		}
+	}, {
+		key: '_render',
+		value: function _render(req, res, next) {
 			return {
-				head: ['<meta charset="utf-8"></meta>', '<script>var unijsGlobalStateCache = ' + JSON.stringify(req.unijs.reactState) + ';</script>'].concat(this.head).concat(this._head).concat(req.unijs.head),
+				head: ['<meta charset="' + this.charset + '"></meta>', '<style>' + cache.css + '</style>', '<script>var unijsGlobalStateCache = ' + JSON.stringify(req.unijs.reactState) + ';</script>'].concat(this.head).concat(this._head).concat(req.unijs.head),
 				body: ['<div id="main">' + req.unijs.reactHtml + '</div>'].concat(this.body).concat(this._body).concat(req.unijs.body)
 			};
 		}
 	}, {
-		key: 'respond',
-		value: function respond(req, res, next) {
-			var render = req.unijs.app.render(req, res, next);
+		key: '_respond',
+		value: function _respond(req, res, next) {
+			var render = req.unijs.app._render(req, res, next);
 			var html = '\n\t   <html>\n\t      <head>\n\t      ' + render.head.join('') + '\n\t      </head>\n\t      <body>\n\t      ' + render.body.join('') + '\n\t      </body>\n\t   </html>\n\t   ';
 			res.send(html);
 		}

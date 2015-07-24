@@ -14,7 +14,10 @@ var mount = function mount(path, app, callback) {
 	    len;
 	for (i = 0, len = appStore.length; i < len; i++) {
 		if (appStore[i]._path === path) {
-			return callback('Path already registered!');
+			if (callback && typeof callback === 'function') {
+				callback('Path already registered!');
+			}
+			return;
 		}
 		if (appStore[i]._path.split('/').length <= pathlength) {
 			break;
@@ -22,16 +25,19 @@ var mount = function mount(path, app, callback) {
 	}
 	app._path = path;
 	appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
-	app.mount(function (err) {
+	app._mount(function (err) {
 		if (err != null) {
 			return uniJsLog.error('Could not mount app at [' + path + ']!', err);
 		}
 		uniJsLog.log('APP Mounted!');
 		app._mounted = true;
+		if (callback && typeof callback === 'function') {
+			callback();
+		}
 	});
 };
 
-var unmount = function unmount(path) {
+var unmount = function unmount(path, callback) {
 	if (typeof path !== 'string') {
 		path = path._path;
 	}
@@ -45,8 +51,11 @@ var unmount = function unmount(path) {
 	var app = arr.splice(i, 1);
 	app._mounted = false;
 	app._path = '';
+	var callback = callback || function () {};
+	app._unmount(callback);
 };
 
 module.exports = {
-	mount: mount
+	mount: mount,
+	unmount: unmount
 };
