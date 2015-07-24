@@ -11,12 +11,23 @@ UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) ap
 > *UniJS requires to use [react-router](https://github.com/rackt/react-router).*
 
 
-## Demo + Docu
+<!--## Demo + Docu
 * **Live:** [UniJS on Heroku](https://unijs.herokuapp.com/)<br>
  (it's free account so it may takes some time when the app sleeps)
-* **Repo:** [unijs/unijs-demo](https://github.com/unijs/unijs-demo)
+* **Repo:** [unijs/unijs-demo](https://github.com/unijs/unijs-demo)-->
 
-### [Documentation](./docs/Index.md)
+## [Documentation](./docs/Index.md)
+
+##Quick Start
+
+> Not working yet! Still working on Demo!
+
+```sh
+git clone https://github.com/unijs/demo.git
+cd demo
+npm install
+npm start
+```
 
 ##Usage
 
