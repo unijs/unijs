@@ -13,16 +13,16 @@ var getMiddleware = function(options) {
 				if (req.unijs == null) {
 					req.unijs = {};
 				}
-				req.unijs.options = options;
-				if(!req.unijs.options.maxRuns){
+				req.unijs.options = options ||  {};
+				if (!req.unijs.options.maxRuns) {
 					req.unijs.options.maxRuns = 5;
 				}
-				if(!req.unijs.options.debug){
+				if (!req.unijs.options.debug) {
 					req.unijs.options.debug = false;
 				}
 				req.unijs.app = appStore[i];
-				req.unijs._url = req.url.substr(appStore[i]._path.length-1);
-				req.unijs._path = req.path.substr(appStore[i]._path.length-1);
+				req.unijs._url = req.url.substr(appStore[i]._path.length - 1);
+				req.unijs._path = req.path.substr(appStore[i]._path.length - 1);
 
 				if (hostFiles(req, res, next)) {
 					return;
