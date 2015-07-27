@@ -14,6 +14,9 @@ var read = function(req, res, next, file) {
 			case 'css':
 				contentType = 'text/css';
 				break;
+			case 'map':
+				contentType = 'application/json';
+				break;
 			default:
 				contentType = 'text/plain';
 		}

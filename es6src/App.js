@@ -72,6 +72,8 @@ class App {
 					case 'css':
 						that._head.push(`<link rel="stylesheet" type="text/css" href="${that._path + '.f/' + resource._id + '.' + resource.type}">`);
 						break;
+					case 'map':
+						break;
 					default:
 						uniJsLog.warn('Resource Type is not supported!', resource)
 				}
