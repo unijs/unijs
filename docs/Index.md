@@ -1,6 +1,6 @@
 # UniJS Documentation
 
-## Usage
+## General
 
 UniJS has two interfaces. One for the server application stuff. And one for the in-component stuff. I'm calling this `Server API` and `Client API`.
 
