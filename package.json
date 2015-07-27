@@ -1,6 +1,6 @@
 {
   "name": "unijs",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Renders reactJS apps universal on node.js without defining server fetchings.",
   "main": "index.js",
   "files": [
@@ -41,9 +41,6 @@
   "homepage": "https://github.com/unijs/unijs",
   "dependencies": {
     "colors": "^1.1.2",
-    "react": "0.13.2",
-    "react-router": "^0.13.3",
-    "reactify": "^0.15.2",
     "superagent": "^1.2.0",
     "url": "^0.10.3"
   },
