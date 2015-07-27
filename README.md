@@ -1,100 +1,159 @@
-![Logo](https://raw.githubusercontent.com/dustin-H/isojs/master/logo.png)
 
-Renders [ReactJS](https://github.com/facebook/react) apps isomorphic on [node.js](https://github.com/joyent/node).
+# <img src="https://avatars0.githubusercontent.com/u/13003405?v=3&s=100" height="50" style="position: relative; top: -5px;" alt=""> UniJS
 
-isojs renders [ReactJS](https://github.com/facebook/react) apps isomorphic on the server and the client without changing something in the app.
+UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
 
-##Demo:
-[Live Demo on Heroku](https://isojs.herokuapp.com/)
+* **Universal:** Use the same code base for server- and client-rendering. Also there is no force to use flux.
+* **Autofetch Data:** Don't worry about data fetching on your server. Just provide a REST-API somewhere and perform AJAX-Requests. UniJS automatically detects which data is neccessary for rendering and fetches it before render.
+* **State Sync:** Sync's the server rendered state to the client. After rendering the app UniJS takes the state out of all components and responds them with the HTML to the client. There the state gets pushed back to the components as initial state.
+* **EcmaScript 6:** Build your apps in ES6 style.
 
-[Repo of the Demo-App](https://github.com/dustin-H/isojs-demo)
-
-###Contribution and Ideas are Welcome! ;-)
-Ideally just create a GitHub Issue to discuss or create a PR.
-
-##Most important features:
-- **render [React](https://github.com/facebook/react) apps with async api calls isomorphic on node.js**
-- **free choice of [Flux](https://github.com/facebook/flux) implementation (or just [React](https://github.com/facebook/react))**
-- **no need to define data fetching on serverside**
-- **sync state from server rendered app to client**
-
-###What it does:
-- guesses which data needs to get fetched on the server based on the [react-router](https://github.com/rackt/react-router) route and previous requests
-- fetches all data at the same time
-- renders the [React](https://github.com/facebook/react) app and synchronous respond to [superagent](https://github.com/visionmedia/superagent) requests with the data fetched before
-- sends the rendered app including the latest state of each component back to the client
-- runs your [React](https://github.com/facebook/react) app on the client (if javascript is enabled)
+<br>
+> *UniJS requires to use [react-router](https://github.com/rackt/react-router).*
 
 
-###How looks a classic architecture?
-- You build a [React](https://github.com/facebook/react) app
-- You load your data via [superagent](https://github.com/visionmedia/superagent)
-- You build a REST API-Server for your data loading (no need to be node.js)
-- You create an isoJS-Server which handles all front-facing requests
+<!--## Demo + Docu
+* **Live:** [UniJS on Heroku](https://unijs.herokuapp.com/)<br>
+ (it's free account so it may takes some time when the app sleeps)
+* **Repo:** [unijs/unijs-demo](https://github.com/unijs/unijs-demo)-->
 
-##Get Started:
+## [Documentation](./docs/Index.md)
 
-To get startet just fork the [isojs-demo-app](https://github.com/dustin-H/isojs-demo).
+##Quick Start
+
+```sh
+git clone https://github.com/unijs/demo.git
+cd demo
+npm install
+npm start
+```
 
 ##Usage
 
-###Installation:
+###Installation
 
-`npm install isojs`
-
-###Server:
-
-On the server-side you only need to define where your routes component is and on which url your data API can be reached.
-
-```js
-var isojs = require('isojs');
-
-var config = {
-	routesPath: './Routes.js',
-	getApiServerAddress: function(){
-		return 'http://localhost:8080/';
-	}
-};
+```sh
+npm install unijs
 ```
 
-With this config you can use the app-builder to create a new server and use it in your express app. (needs to be root!). To ensure, that the server-side part of isojs is available, call `setServer()`.
+###Server
+
+On server-side you need to define your react-router Routes by setting the Router. With the resources attribute array you can add `js` and `css` files.
 
 ```js
-isojs.checkLocation.setServer();
-var isoJSapp = isojs.appBuilder(config);
-app.use(isoJSapp());
+var unijs = require('unijs');
+var Router = require('client/js/Routes.js');
+
+app.use(Server.getMiddleware());
+// Here express is used. You can also use something similar, that passes (req, res, next) to the returned function on each request.
+
+var Server = unijs.Server();
+
+var myApp = new Server.App('myApp');
+
+myApp.Router = Router;
+myApp.resources.push(__dirname+'/bundle.js');
+
+Server.mount('/', myApp);
 ```
 
-###Client:
-
-A basic component that loads data and holds state looks like that:
+####Main client render file for bundle
+>Your React App in the bundle file needs to render to `#main` div container.
 
 ```js
 var React = require('react');
-var superagent = require('superagent');
-var isojs = require('isojs');
+var Router = require('react-router');
+var routes = require('/path/to/Routes.js');
+window.onload = function() {
+	Router.run(routes, Router.HistoryLocation, function(Handler) {
+		React.render(<Handler/>, document.getElementById('main'));
+	});
+};
+```
 
-var Blog = React.createClass({
-	mixins: [isojs.loadMixin, isojs.stateMixin],
+####UniJS-Builder
+UniJS-Builder simplifies the usage of UniJS. By defining the path of your Routes file it compiles with babel, browserify and uglifyify. Then it adds the bundle to the resources.
 
-	isojsInitialState: function(){
-		return { title: '', content: '' };
-	},
+```js
+var unijs = require('unijs');
+var App = unijsBuilder.extend(Server.App);
 
-	loadBlogPost: function(id){
-		superagent
-		.get('/blog/getpost/'+id)
-		.use(isojs.superagentPlugin)
-		.end(function(err, res){
-			this.setState(JSON.parse(res.text));
-		}.bind(this));
-	},
+var Server = unijs.Server();
 
-	componentDidMount: function(){
-		this.loadBlogPost(this.props.id);
-	},
+app.use(Server.getMiddleware());
+// Here express is used. You can also use something similar, that passes (req, res, next) to the returned function on each request.
 
-	render: function() {
+var unijsApp = new App('myDemoApp');
+
+unijsApp.routesPath = 'client/js/Routes.js';
+
+Server.mount('/', unijsApp);
+```
+
+###Client
+
+On client you need to extend each component that has state or is loading data with AJAX.
+
+```js
+class Blog extends React.Component{
+	// component methods
+}
+
+Blog = unijs.extend(Blog);
+```
+
+And load your data with superagent plus unijs-plugin in the componentDidMount method. (componentDidMount gets called while server-rendering when componentWillMount gets called)
+
+```js
+class Blog extends React.Component{
+	componentDidMount(){
+		superagent.get('/getdata')
+			.use(unijs.superagentPlugin)
+			.end(function(err, res) {
+				this.setState(JSON.parse(res.text));
+			}.bind(this)
+		);
+	}
+}
+```
+
+Define your initial state as you do it in React ES6:
+
+```js
+class Blog extends React.Component{
+	constructor(){
+		super();
+		this.state = {title: '', content: ''};
+	}
+}
+```
+
+Now put it all together with some ReactJS basics...
+
+```js
+import React from 'react';
+import superagent from'superagent';
+import unijs from 'unijs';
+
+class Blog extends React.Component {
+	constructor() {
+		super();
+		this.state = {title: '', content: ''};
+	}
+	componentDidMount() {
+		superagent.get('/blog/getpost/' + this.props.id)
+			.use(unijs.superagentPlugin)
+			.end(function(err, res) {
+				this.setState(JSON.parse(res.text));
+			}.bind(this)
+		);
+	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.id != this.props.id) {
+			this.loadBlogPost(nextProps.id);
+		}
+	}
+	render() {
 		return (
 			<div>
 				<h1>{this.state.title}</h1>
@@ -102,53 +161,17 @@ var Blog = React.createClass({
 			</div>
 		);
 	}
-});
+}
+Blog = unijs.extend(Blog);
 
+export default Blog;
 ```
 
-The `Routes.js` file defines all routes of your app with react-router.
+## Roadmap
+- [ ] Load component's code just when it is needed. Maybe with webpack or something own.
+- [ ] Improve Transmission Algorithm.
 
-```js
-var React = require('react');
-var Route = require('react-router').Route;
+## Contribution and Ideas are Welcome! ;-)
+Ideally just create a GitHub Issue or may even a PullRequest to discuss.
 
-var BlogPost = require('./components/BlogPost.react');
-
-var routes = (
-	<Route name="main" path="/">
-		<Route path="/blogpost/:id" name="blogpost" handler={BlogPost}/>
-	</Route>
-);
-
-module.exports = routes;
-```
-
-##What changed compared to a default ReactJS app?
-- Use the `isojs.loadMixin` mixin in all data loading components
-- Use the `isojs.stateMixin` mixin in all components using state
-- Use [superagent](https://github.com/visionmedia/superagent) to load your data
-- Use the `isojs.superagentPlugin` plugin to enable isomorphic rendering of this request
-
-##Performance Note:
-To be able to render your app as fast as possible try to map your route params to your api calls. Do not convert them in any way.
-
-###Do:
-`:id` and `:time` are placeholders for some kind of id and a timestamp
-
-React-Router URL | API Calls
- --- | ---
-/blog/:id | /loadpost/:id
-/blog?id=:id | /loadpost/:id
-/blog/:id | /loadpost?id=:id
-/blog/:id?time=:time | /loadpost?id=id&time=:time
-
-###Do NOT !!!!:
-React-Router URL | API Calls
- --- | ---
-/blog/:id/:time | /loadpost/:id/[:time/2]
-
-`[:time/2]` intents to describe the calculated half of `:time`
-
-
-
-[Apache License Version 2.0](LICENSE)
+[MIT](LICENSE)

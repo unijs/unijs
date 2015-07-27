@@ -1,5 +1,5 @@
 
-var isoJsLog = require('./isoJsLog.js');
+var uniJsLog = require('./log.js');
 
 var hashObject = function(obj) {
 	var hash = '#' + hashCode(JSON.stringify(obj)) + '#'
@@ -20,7 +20,7 @@ var hashCode = function(e) {
 };
 
 var hashRequestWrapper = function(obj) {
-	isoJsLog.warn('hash.request is deprecated! Do not use it anymore!');
+	uniJsLog.warn('hash.request is deprecated! Do not use it anymore!');
 	return hashObject(obj);
 }
 

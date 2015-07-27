@@ -1,6 +1,6 @@
-var checkLocation = require('./checkLocation.js');
-var workData = require('./workData.js');
-var hashObject = require('./hash.js').object;
+var checkLocation = require('../utils/checkLocation.js');
+var renderCache = require('../render/cache.js');
+var hashObject = require('../utils/hash.js').object;
 var url = require('url');
 
 var superagentPlugin = function(request) {
@@ -38,18 +38,18 @@ var superagentPlugin = function(request) {
 
 				minReq._id = hashObject(minReq);
 				var wasCached = false;
-				if (workData.cache.fetchedData[minReq._id]) {
+				if (renderCache.fetchedData[minReq._id]) {
 					wasCached = true;
 				} else {
-					workData.cache.cacheComplete = false;
+					renderCache.cacheComplete = false;
 				}
 
-				workData.cache.requests.push(minReq);
+				renderCache.requests.push(minReq);
 				if (this && this.req) {
 					this.abort();
 				}
-				if (workData.cache.fetchedData[minReq._id]) {
-					var data = workData.cache.fetchedData[minReq._id];
+				if (renderCache.fetchedData[minReq._id]) {
+					var data = renderCache.fetchedData[minReq._id];
 					fn(data.err, data.res);
 				}
 			}

@@ -1,11 +1,10 @@
-var superagent = require('superagent');
-var workData = require('./workData.js');
-var apiRequest = require('./apiRequest.js');
-var applyTransmission = require('./transmissionAlgorythm.js').applyTransmission;
-var transmissionStore = require('./transmissionStore.js');
+
+var apiRequest = require('../api/request.js');
+var applyTransmission = require('../transmissions/algorythm.js').applyTransmission;
+var transmissionStore = require('../transmissions/store.js');
 
 var fetchData = function(req, res, next, callback) {
-	transmissionStore.getTransmission(req.isojs.unifyedRoute, function(error, transmission) {
+	transmissionStore.getTransmission(req.unijs.unifyedRoute, function(error, transmission) {
 		if (error != null) {
 			return callback(req, res, next);
 		}
@@ -15,7 +14,7 @@ var fetchData = function(req, res, next, callback) {
 			j++;
 			var replacements = transmission[i].replacements;
 			var request = JSON.parse(JSON.stringify(transmission[i].req));
-			request = applyTransmission(req.isojs.state, request, replacements);
+			request = applyTransmission(req.unijs.state, request, replacements);
 
 			apiRequest(req, request, function(req, request) {
 				j--;

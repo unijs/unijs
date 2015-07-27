@@ -1,7 +1,7 @@
 
-var transmissionStore = require('./transmissionStore.js');
-var workData = require('./workData.js');
-var hashObject = require('./hash.js').object;
+var transmissionStore = require('../transmissions/store.js');
+var renderCache = require('../render/cache.js');
+var hashObject = require('../utils/hash.js').object;
 
 var applyTransmission = function(state, req, replacements) {
 	//console.log("APTRA", state, req, replacements);
@@ -65,17 +65,17 @@ var replaceValueInRequest = function(requestPattern, value, valueName) {
 var setNewTransmission = function(done) {
 	var transmission = {};
 	var saveOnEnd = false;
-	for (var i in workData.cache.requests) {
+	for (var i in renderCache.requests) {
 		var requestPattern = {
-			req: workData.cache.requests[i],
+			req: renderCache.requests[i],
 			replacements: []
 		};
 		delete requestPattern.req._id;
-		for (var j in workData.cache.state.params) {
-			requestPattern = replaceValueInRequest(requestPattern, workData.cache.state.params[j], 'params.' + j);
+		for (var j in renderCache.state.params) {
+			requestPattern = replaceValueInRequest(requestPattern, renderCache.state.params[j], 'params.' + j);
 		}
-		for (var j in workData.cache.state.query) {
-			requestPattern = replaceValueInRequest(requestPattern, workData.cache.state.query[j], 'query.' + j);
+		for (var j in renderCache.state.query) {
+			requestPattern = replaceValueInRequest(requestPattern, renderCache.state.query[j], 'query.' + j);
 		}
 		requestPattern._id = hashObject(requestPattern);
 
@@ -83,7 +83,7 @@ var setNewTransmission = function(done) {
 		saveOnEnd = true;
 	}
 	if (saveOnEnd === true) {
-		transmissionStore.setTransmission(workData.cache.unifyedRoute, transmission, done);
+		transmissionStore.setTransmission(renderCache.unifyedRoute, transmission, done);
 	}
 };
 
