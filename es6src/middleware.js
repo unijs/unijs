@@ -29,10 +29,10 @@ var getMiddleware = function(options) {
 				}
 
 				render(req, res, next);
-				break;
+				return;
 			}
 		}
-		//next();
+		next();
 	}
 }
 
