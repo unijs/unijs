@@ -1,6 +1,6 @@
 {
   "name": "unijs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Renders reactJS apps universal on node.js without defining server fetchings.",
   "main": "index.js",
   "files": [

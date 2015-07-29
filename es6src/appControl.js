@@ -21,12 +21,20 @@ var mount = function(path, app, callback) {
 			break;
 		}
 	}
-	app._path = path;
-	appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
 	app._mount(function(err) {
 		if (err != null) {
 			return uniJsLog.error(`Could not mount app at [${path}]!`, err);
 		}
+		var pathlength = path.split('/').length;
+		var i = 0,
+			len;
+		for (i = 0, len = appStore.length; i < len; i++) {
+			if (appStore[i]._path.split('/').length <= pathlength) {
+				break;
+			}
+		}
+		app._path = path;
+		appStore.splice(i, 0, app); // Insert app at the correct place in Apps Array
 		uniJsLog.log('APP Mounted!');
 		app._mounted = true;
 		if (callback && typeof callback === 'function') {
