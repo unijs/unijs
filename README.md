@@ -1,5 +1,5 @@
 
-# <img src="https://avatars0.githubusercontent.com/u/13003405?v=3&s=100" height="50" style="position: relative; top: -5px;" alt=""> UniJS
+# <img src="docs/res/logo.png" height="50"> UniJS
 
 UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
 

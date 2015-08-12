@@ -8,6 +8,6 @@ The basic idea of UniJS is the following procedure:
 
 To understand this easier I created a diagram:
 
-![HowItWorksDiagram](diagram.png)
+![HowItWorksDiagram](res/diagram.png)
 
 When you optimize your app it is possible to guess each request correctly after the react-router route which is matching has be called once.
