@@ -72,6 +72,9 @@ window.onload = function() {
 ```
 
 ####UniJS-Builder
+
+> *Don't use this builder anymore! Will be replaced soon!*
+
 UniJS-Builder simplifies the usage of UniJS. By defining the path of your Routes file it compiles with babel, browserify and uglifyify. Then it adds the bundle to the resources.
 
 ```js
