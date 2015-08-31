@@ -28,6 +28,7 @@ var read = function(req, res, next, file) {
 
 var hostFiles = function(req, res, next) {
 	var match = false;
+	console.log('path', req.path, req._path);
 	if (req.unijs._path.substr(0, 4) === "/.f/") {
 		for (var i = 0, len = req.unijs.app._hostfiles.length; i < len; i++) {
 			if ('/.f/' + req.unijs.app._hostfiles[i]._id + '.' + req.unijs.app._hostfiles[i].type === req.unijs._path) {
