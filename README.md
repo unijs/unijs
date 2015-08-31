@@ -70,7 +70,7 @@ window.onload = function() {
 	});
 };
 ```
-
+<!--
 ####UniJS-Builder
 
 > *Don't use this builder anymore! Will be replaced soon!*
@@ -92,6 +92,7 @@ unijsApp.routesPath = 'client/js/Routes.js';
 
 Server.mount('/', unijsApp);
 ```
+-->
 
 ###Client
 
