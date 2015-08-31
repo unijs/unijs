@@ -13,7 +13,7 @@ m.render = {
 };
 m.Server = function() {
 	checkLocation.setServer();
-	return requireNodeJsOnly('./build/Server.js');
+	return requireNodeJsOnly('./build/server.js');
 };
 
 module.exports = m;
