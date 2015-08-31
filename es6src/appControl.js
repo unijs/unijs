@@ -21,6 +21,7 @@ var mount = function(path, app, callback) {
 			break;
 		}
 	}
+	app._path = path;
 	app._mount(function(err) {
 		if (err != null) {
 			return uniJsLog.error(`Could not mount app at [${path}]!`, err);
