@@ -34,7 +34,7 @@ var hostFiles = function hostFiles(req, res, next) {
 	if (folder === '.f') {
 		for (var i = 0, len = req.unijs.app._hostfiles.length; i < len; i++) {
 			var arr = file.split('.');
-			if (req.unijs.app._hostfiles[i]._id === arr[0] && req.unijs.app._hostfiles[i].type === arr[1]) {
+			if (req.unijs.app._hostfiles[i]._id.toString() === arr[0].toString() && req.unijs.app._hostfiles[i].type === arr[1]) {
 				match = true;
 				read(req, res, next, req.unijs.app._hostfiles[i]);
 				return true;
