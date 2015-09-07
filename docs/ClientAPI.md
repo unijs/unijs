@@ -40,7 +40,7 @@ Another way to stop UniJS from calling `componentDidMount` is to define noFetch 
 MyComponent = unijs.extend(MyComponent, true);
 ```
 
-* **NOTE:** If you fetch data from either `componentDidMount` or `unijsFetchData` this call needs to be in sync. So it should't be something like this:
+* **NOTE:** If you fetch data from either `componentDidMount` or `unijsFetchData` this call needs to be in sync. So it should't look like this:
 
 ```js
 // THIS WILL NOT WORK!
