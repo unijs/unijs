@@ -1,4 +1,6 @@
 
+# This repo is no longer maintained!
+
 # <img src="docs/res/logo.png" height="50"> UniJS
 
 UniJS is a library for rendering [ReactJS](https://github.com/facebook/react) apps on [node.js](https://github.com/joyent/node).
